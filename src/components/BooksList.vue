@@ -1,19 +1,24 @@
 <template>
   <h2 class="title"><slot name="title"></slot></h2>
   <p class="info text-m font-normal"><slot name="description"></slot></p>
-  <div class="carousel my-5">
+  <div class="carousel my-5" :class="[ifNonAvailableBooks ? 'no-books' : '']">
     <BookCard
       v-for="book in topBooks"
       :key="book.id"
       :book="book"
       :isReader="reader"
     ></BookCard>
+    <p class="no-books__text text-s font-semibold" v-if="ifNonAvailableBooks">
+      <slot name="no-books-text"></slot>
+    </p>
   </div>
-  <div class="btns-container">
+
+  <div class="btns-container" :class="[ifNonAvailableBooks ? 'center' : '']">
     <button-bc
       class="font-bold"
       variant="primary"
       @click="showAllBooks"
+      v-if="!ifNonAvailableBooks"
     ></button-bc>
     <button-bc
       class="font-bold propose-btn"
@@ -39,7 +44,9 @@ export default {
     BookCard,
     "button-bc": ButtonBC,
   },
-
+  data() {
+    return {};
+  },
   props: {
     displayProposeBtn: {
       type: Boolean,
@@ -75,6 +82,9 @@ export default {
 
       return sortedBooks.slice(0, 5);
     },
+    ifNonAvailableBooks() {
+      return !this.books || !this.books.length;
+    },
   },
 };
 </script>
@@ -102,12 +112,33 @@ export default {
   display: none;
 }
 
+.no-books {
+  align-items: center;
+  justify-content: center;
+}
+
+.no-books__text {
+  color: var(--quaternary-color);
+}
+
+.center {
+  position: absolute;
+  top: 68%;
+  right: calc(50% - 9.9rem);
+}
+
 .propose-btn {
   margin-left: 0.8rem;
 }
 
 .arrow-right-icon {
   margin-left: 0.8rem;
+}
+
+@media (min-width: 768px) {
+  .center {
+    right: calc(50% - 13.9rem);
+  }
 }
 
 @media (min-width: 1024px) {
@@ -126,6 +157,12 @@ export default {
     height: 19rem;
     margin-block: 2.4rem;
   }
+
+  .no-books {
+    align-items: center;
+    height: 25rem;
+    margin-block: 0;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -134,7 +171,10 @@ export default {
     top: 4rem;
     right: 3.3rem;
   }
-
+  .center {
+    top: 71%;
+    right: calc(50% - 14.7rem);
+  }
   .propose-btn {
     margin-left: 2.4rem;
   }

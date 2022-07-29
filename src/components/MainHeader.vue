@@ -1,6 +1,11 @@
 <template>
   <header class="header-container my-7">
-    <ButtonBC class="mx-5" variant="arrow" @click="goBack" v-if="displayBtn">
+    <ButtonBC
+      class="mx-5"
+      variant="arrow"
+      @click="goBack"
+      v-if="displayBackBtn"
+    >
       <v-icon name="oi-arrow-left" scale="2" fill="white" />
     </ButtonBC>
     <img
@@ -23,7 +28,7 @@ export default {
     return {};
   },
   props: {
-    displayBtn: {
+    displayBackBtn: {
       type: Boolean,
       default: true,
     },
