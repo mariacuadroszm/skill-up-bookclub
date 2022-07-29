@@ -14,4 +14,7 @@ export default {
   getBookProfile() {
     return apiClient.get(`clubs/club?id=b2073cce-5afc-4709-9e28-6129f265a3be`);
   },
+  proposeBook(bookInfo) {
+    return apiClient.post("http://184.73.114.18:3100/clubs/club", bookInfo);
+  },
 };

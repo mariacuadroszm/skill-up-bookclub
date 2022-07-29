@@ -10,7 +10,7 @@
         </span>
       </div>
 
-      <form @submit="submitForm" class="form-container">
+      <form @submit.prevent="submitForm" class="form-container">
         <FormLabel id="title">
           <template v-slot:labelDescription>Title</template>
           <template v-slot:labelInput>
@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import EventService from "../services/EventService";
 import FormLabel from "../components/FormLabel.vue";
 import MainHeader from "../components/MainHeader.vue";
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
@@ -126,8 +127,25 @@ export default {
     },
   },
   methods: {
-    submitForm() {
-      console.log("Submitted!");
+    async submitForm() {
+      try {
+        const bookData = {
+          book: {
+            title: this.titleUpperCase,
+            author: this.authorUpperCase,
+            synopsis: this.synopsis,
+            storeUrl: this.link,
+          },
+          userId: "abc",
+        };
+        console.log(bookData);
+        const response = await EventService.proposeBook(bookData);
+        console.log(response);
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+      this.$router.push("/");
     },
   },
 };
