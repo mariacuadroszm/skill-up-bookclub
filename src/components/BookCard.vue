@@ -1,7 +1,7 @@
 <template>
   <div
     class="book-card px-5 py-5"
-    @click.self="this.$router.push(`/book/${book.id}`)"
+    @click.stop="this.$router.push(`/book/${book.id}`)"
   >
     <div class="book-card__info">
       <p
@@ -26,7 +26,7 @@
         <button-bc
           class="font-medium vote-btn"
           variant="secondary"
-          @click="addVote"
+          @click.stop="addVote"
           :class="{ 'user-vote': userVoted }"
         >
           {{ textBtn }}
