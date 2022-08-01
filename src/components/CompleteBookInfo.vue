@@ -65,7 +65,16 @@ export default {
       participants: this.book.participants,
     };
   },
-  props: ["book", "isReader"],
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+    isReader: {
+      type: Boolean,
+      required: true,
+    },
+  },
   computed: {
     textBtn() {
       if (this.isReader && !this.userVoted) {

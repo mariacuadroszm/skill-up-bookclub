@@ -20,7 +20,16 @@ export default {
   data() {
     return {};
   },
-  props: ["book", "isReader"],
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+    isReader: {
+      type: Boolean,
+      required: true,
+    },
+  },
 };
 </script>
 
