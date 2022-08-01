@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="book-card px-5 py-5"
-    @click.stop="this.$router.push(`/book/${book.id}`)"
-  >
+  <div class="book-card px-5 py-5" @click.stop="showBookProfile()">
     <div class="book-card__info">
       <p
         data-testid="title"
@@ -88,6 +85,13 @@ export default {
       } else {
         this.participants = this.participants - 1;
         this.userVoted = false;
+      }
+    },
+    showBookProfile() {
+      if (this.isReader) {
+        return this.$router.push(`/book/active/${this.book.id}`);
+      } else {
+        return this.$router.push(`/book/proposed/${this.book.id}`);
       }
     },
   },

@@ -1,24 +1,24 @@
 <template>
   <h2 class="title"><slot name="title"></slot></h2>
   <p class="info text-m font-normal"><slot name="description"></slot></p>
-  <div class="carousel my-5" :class="[ifNonAvailableBooks ? 'no-books' : '']">
+  <div class="carousel my-5" :class="[ifNoAvailableBooks ? 'no-books' : '']">
     <BookCard
       v-for="book in topBooks"
       :key="book.id"
       :book="book"
       :isReader="reader"
     ></BookCard>
-    <p class="no-books__text text-s font-semibold" v-if="ifNonAvailableBooks">
+    <p class="no-books__text text-s font-semibold" v-if="ifNoAvailableBooks">
       <slot name="no-books-text"></slot>
     </p>
   </div>
 
-  <div class="btns-container" :class="[ifNonAvailableBooks ? 'center' : '']">
+  <div class="btns-container" :class="[ifNoAvailableBooks ? 'center' : '']">
     <button-bc
       class="font-bold"
       variant="primary"
       @click="showAllBooks"
-      v-if="!ifNonAvailableBooks"
+      v-if="!ifNoAvailableBooks"
     ></button-bc>
     <button-bc
       class="font-bold propose-btn"
@@ -82,7 +82,7 @@ export default {
 
       return sortedBooks.slice(0, 5);
     },
-    ifNonAvailableBooks() {
+    ifNoAvailableBooks() {
       return !this.books || !this.books.length;
     },
   },

@@ -2,7 +2,7 @@
   <MainHeader class="mx-6 main-header"></MainHeader>
   <main>
     <article class="book-profile mx-6">
-      <CompleteBookInfo :book="book"></CompleteBookInfo>
+      <CompleteBookInfo :book="book" :isReader="isReader"></CompleteBookInfo>
     </article>
   </main>
 </template>
@@ -20,7 +20,16 @@ export default {
   data() {
     return {};
   },
-  props: ["book"],
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+    isReader: {
+      type: Boolean,
+      required: true,
+    },
+  },
 };
 </script>
 
@@ -29,12 +38,22 @@ export default {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: linear-gradient(
+  background-image: linear-gradient(
     to right bottom,
     #45328c,
-    #483591,
-    #4b3797,
+    #46338d,
+    #47338e,
+    #483490,
+    #493591,
+    #4a3692,
+    #4a3693,
+    #4b3794,
+    #4b3795,
+    #4c3896,
+    #4c3897,
+    #4d399a,
     #4f3a9c,
+    #503c9f,
     #523da2
   );
 }

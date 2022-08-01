@@ -2,7 +2,11 @@
   <v-icon name="bi-book" scale="3" class="book-icon" />
   <h2 class="book-profile__title">{{ book.title }}</h2>
   <p class="book-profile__author text-l font-medium">{{ book.author }}</p>
-  <button-bc class="buy-btn" variant="secondary">
+  <button-bc
+    class="buy-btn"
+    variant="secondary"
+    :class="[isReader ? 'buy-btn--margin-readers' : 'buy-btn--margin-synopsis']"
+  >
     <a
       :href="bookUrl"
       target="_blank"
@@ -12,32 +16,45 @@
       Where to buy?
     </a>
   </button-bc>
-  <div class="book-synopsis">
+  <div class="book-profile__participants--reader" v-if="isReader">
+    <p class="text-s">{{ participants }} Readers</p>
+  </div>
+  <div
+    class="book-synopsis"
+    :class="[
+      !isReader
+        ? 'book-synopsis--margin-interested'
+        : 'book-synopsis--margin-vote-btn',
+    ]"
+  >
     <p class="book-synopsis__title text-xl font-semibold">Synopsis</p>
     <p class="book-synopsis__info text-m">{{ book.synopsis }}</p>
   </div>
-  <p class="book-profile__participants text-s">{{ participants }} Interested</p>
+  <div class="book-profile__participants--interested" v-if="!isReader">
+    <p class="text-s">{{ participants }} Interested</p>
+  </div>
   <button-bc
     class="vote-btn font-medium"
     variant="secondary"
     @click="addVote"
     :class="{ 'user-vote': userVoted }"
   >
-    <span v-if="!userVoted">
-      Vote<v-icon name="hi-solid-plus" scale="0.8" class="icon" />
-    </span>
-    <span v-else>
-      Voted<v-icon name="hi-solid-check" scale="0.8" class="icon" />
-    </span>
+    {{ textBtn }}
+    <span v-if="!userVoted"
+      ><v-icon name="hi-solid-plus" scale="0.8" class="icon"
+    /></span>
+    <span v-else
+      ><v-icon name="hi-solid-check" scale="0.8" class="icon"
+    /></span>
   </button-bc>
-  <p class="book-profile__info text-s font-normal">{{ message }}</p>
+  <p class="book-profile__info text-s font-normal">{{ voteMessage }}</p>
 </template>
 
 <script>
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
-  name: "BookProfile",
+  name: "CompleteBookInfo",
   components: {
     "button-bc": ButtonBC,
   },
@@ -46,19 +63,54 @@ export default {
       userVoted: false,
       bookUrl: this.book.url,
       participants: this.book.participants,
-      message: `tap the "vote" button to be part of our club once it has five or more
-        interested readers`,
     };
   },
-  props: ["book"],
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+    isReader: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  computed: {
+    textBtn() {
+      if (this.isReader && !this.userVoted) {
+        return "Join";
+      } else if (!this.isReader && !this.userVoted) {
+        return "Vote";
+      } else if (this.isReader && this.userVoted) {
+        return "Joined";
+      } else {
+        return "Voted";
+      }
+    },
+    voteMessage() {
+      if (this.isReader && !this.userVoted) {
+        return `Tap "join" to be part of this awesome club.`;
+      } else if (this.isReader && this.userVoted) {
+        return `Now you're part of this club!`;
+      } else if (!this.isReader && !this.userVoted) {
+        return `Tap the "vote" button to be part of our club once it has five or more interested readers`;
+      } else {
+        return `Now you're part of this club! Once it starts you'll find this book profile on "active clubs"`;
+      }
+    },
+  },
   methods: {
     addVote() {
-      if (this.userVoted == false) {
-        this.message = `now you're part of this club! once it starts you'll find this book profile on "active clubs"`;
+      if (this.isReader && !this.userVoted) {
+        this.participants = this.participants + 1;
+        this.userVoted = true;
+      } else if (this.isReader && this.userVoted) {
+        this.participants = this.participants - 1;
+        this.userVoted = false;
+      } else if (!this.isReader && !this.userVoted) {
         this.participants = this.participants + 1;
         this.userVoted = true;
       } else {
-        this.message = `tap the "vote" button to be part of our club once it has five or more interested readers`;
         this.participants = this.participants - 1;
         this.userVoted = false;
       }
@@ -73,19 +125,27 @@ export default {
 }
 
 .book-profile__title {
+  margin-bottom: 0.8rem;
   text-align: center;
 }
 
 .book-profile__author {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
   color: var(--medium-gray);
   text-align: center;
 }
 
 .buy-btn {
-  margin-bottom: 2.4rem;
   padding-inline: 0.8rem;
   height: 3.2rem;
+}
+
+.buy-btn--margin-readers {
+  margin-bottom: 1.2rem;
+}
+
+.buy-btn--margin-synopsis {
+  margin-bottom: 2.4rem;
 }
 
 .buy-btn__url {
@@ -96,10 +156,16 @@ export default {
 .book-synopsis {
   max-width: 40rem;
   min-height: 18.2rem;
-  margin-bottom: 1.4rem;
   padding: 1.6rem;
   border: 0.2rem solid var(--primary-color);
   border-radius: 0.8rem;
+}
+
+.book-synopsis--margin-interested {
+  margin-bottom: 1.4rem;
+}
+.book-synopsis--margin-vote-btn {
+  margin-bottom: 3rem;
 }
 
 .book-synopsis__title {
@@ -107,7 +173,11 @@ export default {
   color: var(--primary-color);
 }
 
-.book-profile__participants {
+.book-profile__participants--reader {
+  margin-bottom: 2rem;
+}
+
+.book-profile__participants--interested {
   margin-bottom: 0.8rem;
 }
 
