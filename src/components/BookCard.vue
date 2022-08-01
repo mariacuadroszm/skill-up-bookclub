@@ -10,17 +10,28 @@
       >
         {{ book.title }}
       </p>
-      <p class="book-card__info--author one-line-clamp text-l font-normal">
+      <p
+        data-testid="author"
+        class="book-card__info--author one-line-clamp text-l font-normal"
+      >
         {{ book.author }}
       </p>
     </div>
     <div class="book-card__footer">
       <v-icon name="bi-book" scale="3" class="book-icon" />
       <div class="book-card__participants">
-        <p v-if="isReader" class="book-card__participants--text text-s">
+        <p
+          data-testid="participants"
+          v-if="isReader"
+          class="book-card__participants--text text-s"
+        >
           {{ participants }} Readers
         </p>
-        <p v-else class="book-card__participants--text text-s">
+        <p
+          data-testid="participants"
+          v-else
+          class="book-card__participants--text text-s"
+        >
           {{ participants }} Interested
         </p>
         <button-bc
@@ -28,6 +39,7 @@
           variant="secondary"
           @click="addVote"
           :class="{ 'user-vote': userVoted }"
+          data-testid="textBtn"
         >
           {{ textBtn }}
           <span v-if="!userVoted"
