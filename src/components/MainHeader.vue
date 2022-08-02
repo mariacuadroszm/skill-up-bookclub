@@ -2,6 +2,7 @@
   <header class="header-container my-7">
     <ButtonBC
       class="mx-5"
+      data-test-id="goBackBtn"
       variant="arrow"
       @click="goBack"
       v-if="displayBackBtn"
