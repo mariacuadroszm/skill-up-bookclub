@@ -25,12 +25,12 @@ describe("Testing UI: BookCard", () => {
     );
     expect(
       wrapper.element.querySelector('[data-testid="participants"]').innerHTML
-    ).toContain("8 Readers");
+    ).toMatch("8 Readers");
 
     const elementText = wrapper.element.querySelector(
       '[data-testid="textBtn"]'
     ).innerHTML;
-    expect(elementText).toContain("Join");
+    expect(elementText).toMatch("Join");
     expect(elementText).toContain("hi-solid-plus");
   });
 
@@ -51,8 +51,8 @@ describe("Testing UI: BookCard", () => {
     const elementText = wrapper.element.querySelector(
       '[data-testid="participants"]'
     ).innerHTML;
-    expect(elementText).toContain("8 Interested");
-    expect(buttonText).toContain("Vote");
+    expect(elementText).toMatch("8 Interested");
+    expect(buttonText).toMatch("Vote");
     expect(buttonText).toContain("hi-solid-plus");
   });
 });
