@@ -1,5 +1,8 @@
 <template>
-  <MainHeader :displayBackBtn="displayBackBtn"></MainHeader>
+  <MainHeader
+    :displayBackBtn="displayBackBtn"
+    :homepage="homepage"
+  ></MainHeader>
   <main>
     <section class="container proposed-books">
       <BooksList :reader="false" :books="proposedBooks">
@@ -45,6 +48,7 @@ export default {
       displayProposeBtn: false,
       proposedBooks: fakeBooks,
       activeBooks: activeClubs,
+      homepage: true,
     };
   },
 };

@@ -1,5 +1,7 @@
 <template>
-  <MainHeader class="mx-6 main-header"></MainHeader>
+  <header class="header">
+    <MainHeader class="mx-6"></MainHeader>
+  </header>
   <main>
     <article class="book-profile mx-6">
       <CompleteBookInfo :book="book" :isReader="isReader"></CompleteBookInfo>
@@ -34,28 +36,11 @@ export default {
 </script>
 
 <style scoped>
-.main-header {
+.header {
   position: sticky;
   top: 0;
   z-index: 1;
-  background-image: linear-gradient(
-    to right bottom,
-    #45328c,
-    #46338d,
-    #47338e,
-    #483490,
-    #493591,
-    #4a3692,
-    #4a3693,
-    #4b3794,
-    #4b3795,
-    #4c3896,
-    #4c3897,
-    #4d399a,
-    #4f3a9c,
-    #503c9f,
-    #523da2
-  );
+  background-image: linear-gradient(to right bottom, #45328c, #4e3b9c);
 }
 
 main {

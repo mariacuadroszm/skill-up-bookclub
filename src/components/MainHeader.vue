@@ -33,10 +33,18 @@ export default {
       type: Boolean,
       default: true,
     },
+    homepage: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     goBack() {
-      this.$router.push("/");
+      if (!this.homepage) {
+        this.$router.go(-1);
+      } else {
+        this.$router.push("/");
+      }
     },
   },
 };
