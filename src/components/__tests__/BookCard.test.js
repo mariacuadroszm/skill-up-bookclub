@@ -55,8 +55,4 @@ describe("Testing UI: BookCard", () => {
     expect(buttonText).toContain("Vote");
     expect(buttonText).toContain("hi-solid-plus");
   });
-
-  //pendiente joined y voted, cómo simular el click para cambiar el valor de uservoted
-
-  //pendiente investigar el router y el click. debo buscar una forma de hacer el test despues de que se renderice el click (nextTick)
 });
