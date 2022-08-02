@@ -19,6 +19,7 @@ export default {
   props: {
     variant: {
       type: String,
+      default: "btn",
       validator: (propValue) => {
         return [
           "primary",
