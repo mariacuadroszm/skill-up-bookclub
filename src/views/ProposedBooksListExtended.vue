@@ -1,11 +1,27 @@
 <template>
   <div class="proposed-books-info-container px-5">
     <MainHeader></MainHeader>
-    <h2 class="proposed-books-info__title">All proposed books</h2>
-    <span class="proposed-books-info__description text-m"
-      >Find here the list with all proposed books
-    </span>
+    <div class="proposed-books">
+      <div class="proposed-books-info">
+        <h2 class="proposed-books-info__title">All proposed books</h2>
+        <span class="proposed-books-info__description text-m"
+          >Find here the list with all proposed books
+        </span>
+      </div>
+
+      <ButtonBC
+        class="font-bold propose-btn"
+        variant="tertiary"
+        @click="proposeBook"
+      >
+        Propose a book<v-icon
+          name="hi-solid-arrow-narrow-right"
+          class="arrow-right-icon"
+        />
+      </ButtonBC>
+    </div>
   </div>
+
   <div class="proposed-books-list px-5">
     <BookCard
       v-for="(book, id) in booksInfoSorted"
@@ -15,18 +31,21 @@
       :isReader="false"
     ></BookCard>
   </div>
+  <span class="thatsAll text-m">That's all we got (-:</span>
 </template>
 
 <script>
 import fakeBooks from "../assets/data.json";
 import MainHeader from "../components/MainHeader.vue";
 import BookCard from "../components/BookCard.vue";
+import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
   name: "ProposedBooksListExtended",
   components: {
     MainHeader,
     BookCard,
+    ButtonBC,
   },
   data() {
     return {
@@ -41,6 +60,12 @@ export default {
       });
     },
   },
+
+  methods: {
+    proposeBook() {
+      this.$router.push("propose-book-form");
+    },
+  },
 };
 </script>
 
@@ -53,7 +78,8 @@ export default {
   background-color: var(--secondary-background-color);
 }
 
-.proposed-books-info__title {
+.proposed-books-info__title,
+.thatsAll {
   color: var(--white);
 }
 .proposed-books-info__description {
@@ -67,17 +93,43 @@ export default {
   background-color: var(--secondary-background-color);
 }
 
+.propose-btn {
+  display: none;
+}
+
+.thatsAll {
+  display: none;
+}
+
 @media (min-width: 768px) {
+  .propose-btn,
+  .thatsAll {
+    display: block;
+  }
   .proposed-books-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     grid-column-gap: 2.4rem;
     grid-row-gap: 0.8rem;
     padding: 0 2.8rem;
+    background-color: none;
   }
-
   .proposed-books-info-container {
     padding: 0 2.8rem;
+    background-color: none;
+  }
+
+  .proposed-books {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .thatsAll {
+    text-align: center;
+    margin-top: 6rem;
+    margin-bottom: 4rem;
   }
 }
 </style>
