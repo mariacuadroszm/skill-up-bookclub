@@ -33,8 +33,8 @@
 <script>
 import BooksList from "@/components/BooksList.vue";
 import MainHeader from "../components/MainHeader.vue";
-import fakeBooks from "../assets/data.json";
-import activeClubs from "../assets/activeData.json";
+// import activeClubs from "../assets/activeData.json";
+import EventService from "../services/EventService.js";
 
 export default {
   name: "HomeView",
@@ -46,10 +46,19 @@ export default {
     return {
       displayBackBtn: false,
       displayProposeBtn: false,
-      proposedBooks: fakeBooks,
-      activeBooks: activeClubs,
+      proposedBooks: [],
+      activeBooks: [],
       homepage: true,
     };
+  },
+  created() {
+    EventService.getProposedBooks(5)
+      .then((response) => {
+        this.proposedBooks = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>

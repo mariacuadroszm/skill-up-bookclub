@@ -5,13 +5,13 @@
         data-testid="title"
         class="book-card__info--title line-clamp text-xl font-semibold"
       >
-        {{ book.title }}
+        {{ title }}
       </p>
       <p
         data-testid="author"
         class="book-card__info--author one-line-clamp text-l font-normal"
       >
-        {{ book.author }}
+        {{ author }}
       </p>
     </div>
     <div class="book-card__footer">
@@ -62,7 +62,9 @@ export default {
   data() {
     return {
       userVoted: false,
-      participants: this.book.participants,
+      title: this.book.book.title,
+      author: this.book.book.author,
+      participants: this.book.userCount,
     };
   },
   props: {
@@ -75,7 +77,6 @@ export default {
       required: true,
     },
   },
-
   computed: {
     textBtn() {
       if (this.isReader && !this.userVoted) {
