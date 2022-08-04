@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import EventService from "../services/EventService";
 import MainHeader from "../components/MainHeader.vue";
 import CompleteBookInfo from "../components/CompleteBookInfo.vue";
 
@@ -20,17 +21,36 @@ export default {
     CompleteBookInfo,
   },
   data() {
-    return {};
+    return {
+      book: {},
+    };
   },
   props: {
-    book: {
-      type: Object,
+    id: {
+      type: String,
       required: true,
     },
-    isReader: {
-      type: Boolean,
+    reader: {
+      type: String,
       required: true,
     },
+  },
+  computed: {
+    isReader() {
+      if (this.reader === "false") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
+
+  async created() {
+    try {
+      this.book = await EventService.getBookProfile(this.id);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>

@@ -11,8 +11,9 @@ const apiClient = axios.create({
 });
 
 export default {
-  getBookProfile() {
-    return apiClient.get(`clubs/club?id=b2073cce-5afc-4709-9e28-6129f265a3be`);
+  async getBookProfile(id) {
+    const response = await apiClient.get(`clubs/club?id=${id}`);
+    return response.data.book;
   },
   proposeBook(bookInfo) {
     return apiClient.post("/clubs/club", bookInfo);

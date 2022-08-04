@@ -93,7 +93,8 @@ export default {
     addVote() {
       if (this.userVoted == false) {
         this.participants = this.participants + 1;
-        this.userVoted = true;
+        this.userVoted = true; // para votar si si cambia cambio el dato sino digo error y envio info al server
+        //luego hago un llamado al endpoint de parcitipants para volver a actualizar los datos
       } else {
         this.participants = this.participants - 1;
         this.userVoted = false;
@@ -101,9 +102,15 @@ export default {
     },
     showBookProfile() {
       if (this.isReader) {
-        return this.$router.push(`/book/active/${this.book.id}`);
+        return this.$router.push({
+          name: "ActiveBookProfile",
+          params: { id: this.book.id, reader: true },
+        });
       } else {
-        return this.$router.push(`/book/proposed/${this.book.id}`);
+        return this.$router.push({
+          name: "ProposedBookProfile",
+          params: { id: this.book.id, reader: false },
+        });
       }
     },
   },
