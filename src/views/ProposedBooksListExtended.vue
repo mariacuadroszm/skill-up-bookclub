@@ -70,6 +70,9 @@ export default {
 </script>
 
 <style scoped>
+html {
+  background-color: var(--secondary-background-color);
+}
 .proposed-books-info-container {
   height: 100%;
   position: sticky;
@@ -81,6 +84,9 @@ export default {
 .proposed-books-info__title,
 .thatsAll {
   color: var(--white);
+  display: block;
+  height: 100%;
+  background-color: var(--secondary-background-color);
 }
 .proposed-books-info__description {
   display: inline-block;
@@ -112,11 +118,9 @@ export default {
     grid-column-gap: 2.4rem;
     grid-row-gap: 0.8rem;
     padding: 0 2.8rem;
-    background-color: none;
   }
   .proposed-books-info-container {
     padding: 0 2.8rem;
-    background-color: none;
   }
 
   .proposed-books {

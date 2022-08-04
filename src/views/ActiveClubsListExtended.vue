@@ -15,6 +15,7 @@
       :isReader="true"
     ></BookCard>
   </div>
+  <span class="thatsAll text-m">That's all we got (-:</span>
 </template>
 
 <script>
@@ -65,5 +66,38 @@ export default {
 .proposed-books-list {
   padding-bottom: 1.6rem;
   background-color: var(--secondary-background-color);
+}
+.thatsAll {
+  color: var(--white);
+  display: block;
+  height: 100%;
+  background-color: var(--secondary-background-color);
+}
+
+@media (min-width: 768px) {
+  .thatsAll {
+    display: block;
+    text-align: center;
+    margin-top: 6rem;
+    margin-bottom: 4rem;
+  }
+  .proposed-books-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-column-gap: 2.4rem;
+    grid-row-gap: 0.8rem;
+    padding: 0 2.8rem;
+  }
+  .proposed-books-info-container {
+    padding: 0 2.8rem;
+  }
+
+  .proposed-books {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
 }
 </style>
