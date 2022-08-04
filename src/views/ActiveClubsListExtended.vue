@@ -1,21 +1,23 @@
 <template>
-  <div class="proposed-books-info-container px-5">
-    <MainHeader></MainHeader>
-    <h2 class="proposed-books-info__title">All active clubs</h2>
-    <span class="proposed-books-info__description text-m"
-      >List with current active book clubs
-    </span>
+  <div class="active-clubs-container">
+    <div class="proposed-books-info-container px-5">
+      <MainHeader></MainHeader>
+      <h2 class="proposed-books-info__title">All active clubs</h2>
+      <span class="proposed-books-info__description text-m"
+        >List with current active book clubs
+      </span>
+    </div>
+    <div class="proposed-books-list px-5">
+      <BookCard
+        v-for="(book, id) in booksInfoSorted"
+        :key="id"
+        :book="book"
+        class="extended"
+        :isReader="true"
+      ></BookCard>
+    </div>
+    <span class="thatsAll text-m">That's all we got (-:</span>
   </div>
-  <div class="proposed-books-list px-5">
-    <BookCard
-      v-for="(book, id) in booksInfoSorted"
-      :key="id"
-      :book="book"
-      class="extended"
-      :isReader="true"
-    ></BookCard>
-  </div>
-  <span class="thatsAll text-m">That's all we got (-:</span>
 </template>
 
 <script>
@@ -46,6 +48,9 @@ export default {
 </script>
 
 <style scoped>
+.active-clubs-container {
+  background-color: var(--secondary-background-color);
+}
 .proposed-books-info-container {
   height: 100%;
   position: sticky;
@@ -65,20 +70,17 @@ export default {
 }
 .proposed-books-list {
   padding-bottom: 1.6rem;
-  background-color: var(--secondary-background-color);
 }
 .thatsAll {
   color: var(--white);
-  display: block;
-  height: 100%;
-  background-color: var(--secondary-background-color);
+  display: none;
 }
 
 @media (min-width: 768px) {
   .thatsAll {
     display: block;
     text-align: center;
-    margin-top: 6rem;
+    margin-top: 15rem;
     margin-bottom: 4rem;
   }
   .proposed-books-list {
@@ -98,6 +100,5 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
-
 }
 </style>

@@ -1,37 +1,39 @@
 <template>
-  <div class="proposed-books-info-container px-5">
-    <MainHeader></MainHeader>
-    <div class="proposed-books">
-      <div class="proposed-books-info">
-        <h2 class="proposed-books-info__title">All proposed books</h2>
-        <span class="proposed-books-info__description text-m"
-          >Find here the list with all proposed books
-        </span>
+  <div class="proposed-books-container">
+    <div class="proposed-books-info-container px-5">
+      <MainHeader></MainHeader>
+      <div class="proposed-books">
+        <div class="proposed-books-info">
+          <h2 class="proposed-books-info__title">All proposed books</h2>
+          <span class="proposed-books-info__description text-m"
+            >Find here the list with all proposed books
+          </span>
+        </div>
+
+        <ButtonBC
+          class="font-bold propose-btn"
+          variant="tertiary"
+          @click="proposeBook"
+        >
+          Propose a book<v-icon
+            name="hi-solid-arrow-narrow-right"
+            class="arrow-right-icon"
+          />
+        </ButtonBC>
       </div>
-
-      <ButtonBC
-        class="font-bold propose-btn"
-        variant="tertiary"
-        @click="proposeBook"
-      >
-        Propose a book<v-icon
-          name="hi-solid-arrow-narrow-right"
-          class="arrow-right-icon"
-        />
-      </ButtonBC>
     </div>
-  </div>
 
-  <div class="proposed-books-list px-5">
-    <BookCard
-      v-for="(book, id) in booksInfoSorted"
-      :key="id"
-      :book="book"
-      class="extended bookCardExtended"
-      :isReader="false"
-    ></BookCard>
+    <div class="proposed-books-list px-5">
+      <BookCard
+        v-for="(book, id) in booksInfoSorted"
+        :key="id"
+        :book="book"
+        class="extended bookCardExtended"
+        :isReader="false"
+      ></BookCard>
+    </div>
+    <span class="thatsAll text-m">That's all we got (-:</span>
   </div>
-  <span class="thatsAll text-m">That's all we got (-:</span>
 </template>
 
 <script>
@@ -70,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-html {
+.proposed-books-container {
   background-color: var(--secondary-background-color);
 }
 .proposed-books-info-container {
@@ -86,7 +88,6 @@ html {
   color: var(--white);
   display: block;
   height: 100%;
-  background-color: var(--secondary-background-color);
 }
 .proposed-books-info__description {
   display: inline-block;
@@ -96,13 +97,9 @@ html {
 }
 .proposed-books-list {
   padding-bottom: 1.6rem;
-  background-color: var(--secondary-background-color);
 }
 
-.propose-btn {
-  display: none;
-}
-
+.propose-btn,
 .thatsAll {
   display: none;
 }
