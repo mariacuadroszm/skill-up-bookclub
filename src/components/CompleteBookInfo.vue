@@ -17,7 +17,7 @@
     </a>
   </button-bc>
   <div class="book-profile__participants--reader" v-if="isReader">
-    <p class="text-s">{{ participants }} Readers</p>
+    <p class="text-s">{{ book.participants }} Readers</p>
   </div>
   <div
     class="book-synopsis"
@@ -31,7 +31,7 @@
     <p class="book-synopsis__info text-m">{{ book.synopsis }}</p>
   </div>
   <div class="book-profile__participants--interested" v-if="!isReader">
-    <p class="text-s">{{ participants }} Interested</p>
+    <p class="text-s">{{ book.participants }} Interested</p>
   </div>
   <button-bc
     class="vote-btn font-medium"
@@ -61,8 +61,7 @@ export default {
   data() {
     return {
       userVoted: false,
-      bookUrl: this.book.url,
-      participants: this.book.participants,
+      bookUrl: this.book.storeUrl,
     };
   },
   props: {

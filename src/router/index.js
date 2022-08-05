@@ -5,8 +5,6 @@ import ProposedBooksListExtended from "../views/ProposedBooksListExtended.vue";
 import BookProfile from "../views/BookProfile.vue";
 import ActiveClubsListExtended from "../views/ActiveClubsListExtended.vue";
 
-import activeBooks from "../assets/activeData.json";
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

@@ -15,6 +15,12 @@ export default {
     const response = await apiClient.get(`clubs/club?id=${id}`);
     return response.data.book;
   },
+
+  async getParcipantsCount(id) {
+    const response = await apiClient.get(`/clubs/club/users?id=${id}`);
+    return response.data.count;
+  },
+
   proposeBook(bookInfo) {
     return apiClient.post("/clubs/club", bookInfo);
   },

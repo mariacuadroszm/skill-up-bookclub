@@ -2,7 +2,7 @@
   <header class="header">
     <MainHeader class="mx-6"></MainHeader>
   </header>
-  <main>
+  <main v-if="bookInfo && participants">
     <article class="book-profile mx-6">
       <CompleteBookInfo :book="book" :isReader="isReader"></CompleteBookInfo>
     </article>
@@ -22,7 +22,8 @@ export default {
   },
   data() {
     return {
-      book: {},
+      bookInfo: {},
+      participants: 0,
     };
   },
   props: {
@@ -36,6 +37,25 @@ export default {
     },
   },
   computed: {
+    book() {
+      const titleLowerCase = this.bookInfo.title.toLowerCase();
+      const titleCapFirstLetter =
+        titleLowerCase.charAt(0).toUpperCase() + titleLowerCase.slice(1);
+      const splitAuthor = this.bookInfo.author.toLowerCase().split(" ");
+      for (var i = 0; i < splitAuthor.length; i++) {
+        splitAuthor[i] =
+          splitAuthor[i].charAt(0).toUpperCase() + splitAuthor[i].substring(1);
+      }
+      const authorCapFirstLetter = splitAuthor.join(" ");
+
+      return {
+        title: titleCapFirstLetter,
+        author: authorCapFirstLetter,
+        synopsis: this.bookInfo.synopsis,
+        storeUrl: this.bookInfo.storeUrl,
+        participants: this.participants,
+      };
+    },
     isReader() {
       if (this.reader === "false") {
         return false;
@@ -47,9 +67,10 @@ export default {
 
   async created() {
     try {
-      this.book = await EventService.getBookProfile(this.id);
+      this.bookInfo = await EventService.getBookProfile(this.id);
+      this.participants = await EventService.getParcipantsCount(this.id);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 };
