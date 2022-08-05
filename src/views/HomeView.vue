@@ -5,7 +5,7 @@
   ></MainHeader>
   <main>
     <section class="container proposed-books">
-      <BooksList :reader="false" :books="proposedBooks">
+      <BookList :reader="false" :books="proposedBooks">
         <template v-slot:title>Proposed books</template>
         <template v-slot:description
           >Vote for the books you want to read
@@ -13,11 +13,11 @@
         <template v-slot:no-books-text>
           We don't have any proposed books yet )-:
         </template>
-      </BooksList>
+      </BookList>
     </section>
 
     <section class="container active-clubs">
-      <BooksList :displayProposeBtn="false" :reader="true" :books="activeBooks">
+      <BookList :displayProposeBtn="false" :reader="true" :books="activeBooks">
         <template v-slot:title>Active clubs</template>
         <template v-slot:description
           >Find active book clubs and their members
@@ -25,20 +25,20 @@
         <template v-slot:no-books-text>
           We don't have any active books yet )-:
         </template>
-      </BooksList>
+      </BookList>
     </section>
   </main>
 </template>
 
 <script>
-import BooksList from "@/components/BooksList.vue";
+import BookList from "@/components/BookList.vue";
 import MainHeader from "../components/MainHeader.vue";
 import EventService from "../services/EventService.js";
 
 export default {
   name: "HomeView",
   components: {
-    BooksList,
+    BookList,
     MainHeader,
   },
   data() {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ProposeBookForm from "../views/ProposeBookForm.vue";
-import ProposedBooksListExtended from "../views/ProposedBooksListExtended.vue";
+import ProposedBookListExtended from "../views/ProposedBookListExtended.vue";
 import BookProfile from "../views/BookProfile.vue";
 import ActiveClubsListExtended from "../views/ActiveClubsListExtended.vue";
 import fakeBooks from "../assets/data.json";
@@ -22,8 +22,8 @@ const router = createRouter({
     },
     {
       path: "/proposed-books-list",
-      name: "ProposedBooksListExtended",
-      component: ProposedBooksListExtended,
+      name: "ProposedBookListExtended",
+      component: ProposedBookListExtended,
     },
     {
       path: "/active-clubs-list",

@@ -23,7 +23,7 @@ import BookCard from "../components/BookCard.vue";
 import EventService from "../services/EventService.js";
 
 export default {
-  name: "ProposedBooksListExtended",
+  name: "ProposedBookListExtended",
   components: {
     MainHeader,
     BookCard,

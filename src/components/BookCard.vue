@@ -5,13 +5,13 @@
         data-testid="title"
         class="book-card__info--title line-clamp text-xl font-semibold"
       >
-        {{ title }}
+        {{ titleCapitalize }}
       </p>
       <p
         data-testid="author"
         class="book-card__info--author one-line-clamp text-l font-normal"
       >
-        {{ author }}
+        {{ authorCapitalize }}
       </p>
     </div>
     <div class="book-card__footer">
@@ -89,6 +89,14 @@ export default {
         return "Voted";
       }
     },
+    titleCapitalize() {
+      const firstLetter = this.title.charAt(0);
+      const titleLowerCase = this.title.slice(1).toLowerCase();
+      return `${firstLetter}${titleLowerCase}`;
+    },
+    authorCapitalize() {
+      return this.author.toLowerCase();
+    },
   },
   methods: {
     addVote() {
@@ -130,6 +138,7 @@ export default {
 }
 
 .book-card__info--author {
+  text-transform: capitalize;
   color: var(--quaternary-color);
 }
 
