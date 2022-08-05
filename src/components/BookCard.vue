@@ -93,8 +93,7 @@ export default {
     addVote() {
       if (this.userVoted == false) {
         this.participants = this.participants + 1;
-        this.userVoted = true; // para votar si si cambia cambio el dato sino digo error y envio info al server
-        //luego hago un llamado al endpoint de parcitipants para volver a actualizar los datos
+        this.userVoted = true;
       } else {
         this.participants = this.participants - 1;
         this.userVoted = false;
