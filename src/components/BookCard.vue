@@ -11,7 +11,7 @@
         data-testid="author"
         class="book-card__info--author one-line-clamp text-l font-normal"
       >
-        {{ authorCapitalize }}
+        {{ authorToLowerCase }}
       </p>
     </div>
     <div class="book-card__footer">
@@ -94,7 +94,7 @@ export default {
       const titleLowerCase = this.title.slice(1).toLowerCase();
       return `${firstLetter}${titleLowerCase}`;
     },
-    authorCapitalize() {
+    authorToLowerCase() {
       return this.author.toLowerCase();
     },
   },
