@@ -27,12 +27,19 @@
         </template>
       </BooksList>
     </section>
+    <PopUp>
+      <p class="pop-up-text text-s font-bold">
+        Your book has been proposed (-:
+      </p>
+      <p class="pop-up-text text-s font-bold">Find it on “Proposed books”</p>
+    </PopUp>
   </main>
 </template>
 
 <script>
 import BooksList from "@/components/BooksList.vue";
 import MainHeader from "../components/MainHeader.vue";
+import PopUp from "../components/PopUp.vue";
 import fakeBooks from "../assets/data.json";
 import activeClubs from "../assets/activeData.json";
 
@@ -41,6 +48,7 @@ export default {
   components: {
     BooksList,
     MainHeader,
+    PopUp,
   },
   data() {
     return {
