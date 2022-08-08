@@ -66,7 +66,7 @@ export default {
       if (this.reader) {
         this.$router.push("active-clubs-list");
       } else {
-        this.$router.push("proposed-books-list");
+        this.$router.push("proposed-book-list");
       }
     },
     proposeBook() {

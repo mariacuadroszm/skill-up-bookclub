@@ -43,7 +43,7 @@ import BookCard from "../components/BookCard.vue";
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
-  name: "ProposedBooksListExtended",
+  name: "ProposedBookListExtended",
   components: {
     MainHeader,
     BookCard,
