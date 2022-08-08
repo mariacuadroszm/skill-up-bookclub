@@ -27,7 +27,7 @@
         </template>
       </BooksList>
     </section>
-    <PopUp>
+    <PopUp v-if="displayPopUp" @closePopUp="closePopUp">
       <p class="pop-up-text text-s font-bold">
         Your book has been proposed (-:
       </p>
@@ -57,7 +57,30 @@ export default {
       proposedBooks: fakeBooks,
       activeBooks: activeClubs,
       homepage: true,
+      displayPopUp: false,
     };
+  },
+
+  props: {
+    popUpTrigger: {
+      type: String,
+      default: "false",
+      validator: (propValue) => {
+        return ["true", "false"].includes(propValue);
+      },
+    },
+  },
+
+  methods: {
+    closePopUp() {
+      this.displayPopUp = false;
+    },
+  },
+
+  created() {
+    if (this.popUpTrigger === "true") {
+      this.displayPopUp = true;
+    }
   },
 };
 </script>

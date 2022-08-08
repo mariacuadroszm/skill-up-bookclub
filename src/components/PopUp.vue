@@ -2,7 +2,9 @@
   <div class="pop-up-container">
     <div class="pop-up-inner mx-11 px-12 py-8">
       <slot class="pop-up-inner__text"></slot>
-      <ButtonBC class="pop-up__btn" variant="primary">Got it!</ButtonBC>
+      <ButtonBC class="pop-up__btn" variant="primary" @click="closePopUp"
+        >Got it!</ButtonBC
+      >
     </div>
   </div>
 </template>
@@ -15,9 +17,10 @@ export default {
   components: {
     ButtonBC,
   },
-
-  data() {
-    return {};
+  methods: {
+    closePopUp() {
+      this.$emit("closePopUp");
+    },
   },
 };
 </script>
