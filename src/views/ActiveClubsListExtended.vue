@@ -1,12 +1,12 @@
 <template>
+  <div class="proposed-books-info-container px-5">
+    <MainHeader></MainHeader>
+    <h2 class="proposed-books-info__title">All active clubs</h2>
+    <span class="proposed-books-info__description text-m"
+      >List with current active book clubs
+    </span>
+  </div>
   <div class="active-clubs-container">
-    <div class="proposed-books-info-container px-5">
-      <MainHeader></MainHeader>
-      <h2 class="proposed-books-info__title">All active clubs</h2>
-      <span class="proposed-books-info__description text-m"
-        >List with current active book clubs
-      </span>
-    </div>
     <div class="proposed-books-list px-5">
       <BookCard
         v-for="(book, id) in booksInfoSorted"
@@ -48,9 +48,6 @@ export default {
 </script>
 
 <style scoped>
-.active-clubs-container {
-  background-color: var(--secondary-background-color);
-}
 .proposed-books-info-container {
   height: 100%;
   position: sticky;
@@ -68,6 +65,9 @@ export default {
   margin-bottom: 1.8rem;
   color: var(--white);
 }
+.active-clubs-container {
+  background-color: var(--secondary-background-color);
+}
 .proposed-books-list {
   padding-bottom: 1.6rem;
 }
@@ -77,11 +77,14 @@ export default {
 }
 
 @media (min-width: 768px) {
+  .active-clubs-container {
+    min-height: calc(100vh - 232px);
+  }
   .thatsAll {
     display: block;
     text-align: center;
-    margin-top: 15rem;
-    margin-bottom: 4rem;
+    padding-top: 14rem;
+    padding-bottom: 13rem;
   }
   .proposed-books-list {
     display: grid;

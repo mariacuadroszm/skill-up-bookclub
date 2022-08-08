@@ -1,28 +1,28 @@
 <template>
-  <div class="proposed-books-container">
-    <div class="proposed-books-info-container px-5">
-      <MainHeader></MainHeader>
-      <div class="proposed-books">
-        <div class="proposed-books-info">
-          <h2 class="proposed-books-info__title">All proposed books</h2>
-          <span class="proposed-books-info__description text-m"
-            >Find here the list with all proposed books
-          </span>
-        </div>
-
-        <ButtonBC
-          class="font-bold propose-btn"
-          variant="tertiary"
-          @click="proposeBook"
-        >
-          Propose a book<v-icon
-            name="hi-solid-arrow-narrow-right"
-            class="arrow-right-icon"
-          />
-        </ButtonBC>
+  <div class="proposed-books-info-container px-5">
+    <MainHeader></MainHeader>
+    <div class="proposed-books">
+      <div class="proposed-books-info">
+        <h2 class="proposed-books-info__title">All proposed books</h2>
+        <span class="proposed-books-info__description text-m"
+          >Find here the list with all proposed books
+        </span>
       </div>
-    </div>
 
+      <ButtonBC
+        class="font-bold propose-btn"
+        variant="tertiary"
+        @click="proposeBook"
+      >
+        Propose a book<v-icon
+          name="hi-solid-arrow-narrow-right"
+          class="arrow-right-icon"
+        />
+      </ButtonBC>
+    </div>
+  </div>
+
+  <div class="proposed-books-container">
     <div class="proposed-books-list px-5">
       <BookCard
         v-for="(book, id) in booksInfoSorted"
@@ -72,9 +72,6 @@ export default {
 </script>
 
 <style scoped>
-.proposed-books-container {
-  background-color: var(--secondary-background-color);
-}
 .proposed-books-info-container {
   height: 100%;
   position: sticky;
@@ -86,14 +83,15 @@ export default {
 .proposed-books-info__title,
 .thatsAll {
   color: var(--white);
-  display: block;
-  height: 100%;
 }
 .proposed-books-info__description {
   display: inline-block;
   margin-top: 0.6rem;
   margin-bottom: 1.8rem;
   color: var(--white);
+}
+.proposed-books-container {
+  background-color: var(--secondary-background-color);
 }
 .proposed-books-list {
   padding-bottom: 1.6rem;
@@ -126,11 +124,14 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
-
+  .proposed-books-container {
+    min-height: calc(100vh - 232px);
+  }
   .thatsAll {
     text-align: center;
-    margin-top: 6rem;
-    margin-bottom: 4rem;
+    padding-top: 14rem;
+    padding-bottom: 13rem;
+    background-color: var(--secondary-background-color);
   }
 }
 </style>
