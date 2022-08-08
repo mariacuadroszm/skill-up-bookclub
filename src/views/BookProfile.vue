@@ -41,16 +41,11 @@ export default {
       const titleLowerCase = this.bookInfo.title.toLowerCase();
       const titleCapFirstLetter =
         titleLowerCase.charAt(0).toUpperCase() + titleLowerCase.slice(1);
-      const splitAuthor = this.bookInfo.author.toLowerCase().split(" ");
-      for (var i = 0; i < splitAuthor.length; i++) {
-        splitAuthor[i] =
-          splitAuthor[i].charAt(0).toUpperCase() + splitAuthor[i].substring(1);
-      }
-      const authorCapFirstLetter = splitAuthor.join(" ");
+      const authorLowerCase = this.bookInfo.author.toLowerCase();
 
       return {
         title: titleCapFirstLetter,
-        author: authorCapFirstLetter,
+        author: authorLowerCase,
         synopsis: this.bookInfo.synopsis,
         storeUrl: this.bookInfo.storeUrl,
         participants: this.participants,

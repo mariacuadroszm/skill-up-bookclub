@@ -132,6 +132,7 @@ export default {
   margin-bottom: 1.2rem;
   color: var(--medium-gray);
   text-align: center;
+  text-transform: capitalize;
 }
 
 .buy-btn {
