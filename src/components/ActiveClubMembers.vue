@@ -97,7 +97,7 @@ export default {
 }
 
 @media (min-width: 768px) {
-  .members__title  {
+  .members__title {
     align-self: center;
   }
 }
