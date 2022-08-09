@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import activeClubs from "../assets/activeData.json";
 import MainHeader from "../components/MainHeader.vue";
 import BookCard from "../components/BookCard.vue";
+import EventService from "../services/EventService.js";
 
 export default {
   name: "ActiveClubsListExtended",
@@ -33,8 +33,17 @@ export default {
   },
   data() {
     return {
-      booksInfo: activeClubs,
+      booksInfo: [],
     };
+  },
+  created() {
+    EventService.getActiveBooks(50)
+      .then((response) => {
+        this.booksInfo = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   computed: {
     booksInfoSorted() {

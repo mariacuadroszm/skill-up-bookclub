@@ -8,9 +8,11 @@ describe("Testing UI: BookCard", () => {
     const wrapper = mount(BookCard, {
       props: {
         book: {
-          title: "Matar a un ruiseñor",
-          participants: 8,
-          author: "Leslie y Mar",
+          book: {
+            title: "Matar a un ruiseñor",
+            author: "Leslie y Mar",
+          },
+          userCount: 8,
         },
         isReader: true,
       },
@@ -38,9 +40,11 @@ describe("Testing UI: BookCard", () => {
     const wrapper = mount(BookCard, {
       props: {
         book: {
-          title: "Matar a un ruiseñor",
-          participants: 8,
-          author: "Leslie y Mar",
+          book: {
+            title: "Matar a un ruiseñor",
+            author: "Leslie y Mar",
+          },
+          userCount: 8,
         },
         isReader: false,
       },

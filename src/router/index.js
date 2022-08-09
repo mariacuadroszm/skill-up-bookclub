@@ -21,7 +21,7 @@ const router = createRouter({
       component: ProposeBookForm,
     },
     {
-      path: "/proposed-book-list",
+      path: "/proposed-books-list",
       name: "ProposedBookListExtended",
       component: ProposedBookListExtended,
     },
