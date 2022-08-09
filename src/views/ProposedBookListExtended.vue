@@ -1,46 +1,58 @@
 <template>
   <div class="proposed-books-info-container px-5">
     <MainHeader></MainHeader>
-    <h2 class="proposed-books-info__title">All proposed books</h2>
-    <span class="proposed-books-info__description text-m"
-      >Find here the list with all proposed books
-    </span>
+    <div class="proposed-books">
+      <div class="proposed-books-info">
+        <h2 class="proposed-books-info__title">All proposed books</h2>
+        <span class="proposed-books-info__description text-m"
+          >Find here the list with all proposed books
+        </span>
+      </div>
+
+      <ButtonBC
+        class="font-bold propose-btn"
+        variant="tertiary"
+        @click="proposeBook"
+      >
+        Propose a book<v-icon
+          name="hi-solid-arrow-narrow-right"
+          class="arrow-right-icon"
+        />
+      </ButtonBC>
+    </div>
   </div>
-  <div class="proposed-books-list px-5">
-    <BookCard
-      v-for="(book, id) in booksInfoSorted"
-      :key="id"
-      :book="book"
-      class="extended"
-      :isReader="false"
-    ></BookCard>
+
+  <div class="proposed-books-container">
+    <div class="proposed-books-list px-5">
+      <BookCard
+        v-for="(book, id) in booksInfoSorted"
+        :key="id"
+        :book="book"
+        class="extended bookCardExtended"
+        :isReader="false"
+      ></BookCard>
+    </div>
+    <span class="thatsAll text-m">That's all we got (-:</span>
   </div>
 </template>
 
 <script>
+import fakeBooks from "../assets/data.json";
 import MainHeader from "../components/MainHeader.vue";
 import BookCard from "../components/BookCard.vue";
-import EventService from "../services/EventService.js";
+import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
   name: "ProposedBookListExtended",
   components: {
     MainHeader,
     BookCard,
+    ButtonBC,
   },
   data() {
     return {
-      booksInfo: [],
+      booksInfo: fakeBooks,
     };
-  },
-  created() {
-    EventService.getProposedBooks(50)
-      .then((response) => {
-        this.booksInfo = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   },
   computed: {
     booksInfoSorted() {
@@ -48,6 +60,12 @@ export default {
       return booksCopy.sort(function (a, b) {
         return b.participants - a.participants;
       });
+    },
+  },
+
+  methods: {
+    proposeBook() {
+      this.$router.push("propose-book-form");
     },
   },
 };
@@ -62,7 +80,8 @@ export default {
   background-color: var(--secondary-background-color);
 }
 
-.proposed-books-info__title {
+.proposed-books-info__title,
+.thatsAll {
   color: var(--white);
 }
 .proposed-books-info__description {
@@ -71,8 +90,48 @@ export default {
   margin-bottom: 1.8rem;
   color: var(--white);
 }
+.proposed-books-container {
+  background-color: var(--secondary-background-color);
+}
 .proposed-books-list {
   padding-bottom: 1.6rem;
-  background-color: var(--secondary-background-color);
+}
+
+.propose-btn,
+.thatsAll {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .propose-btn,
+  .thatsAll {
+    display: block;
+  }
+  .proposed-books-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-column-gap: 2.4rem;
+    grid-row-gap: 0.8rem;
+    padding: 0 2.8rem;
+  }
+  .proposed-books-info-container {
+    padding: 0 2.8rem;
+  }
+
+  .proposed-books {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .proposed-books-container {
+    min-height: calc(100vh - 232px);
+  }
+  .thatsAll {
+    text-align: center;
+    padding-top: 14rem;
+    padding-bottom: 13rem;
+    background-color: var(--secondary-background-color);
+  }
 }
 </style>
