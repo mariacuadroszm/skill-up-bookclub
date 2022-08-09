@@ -8,7 +8,6 @@
       :book="book"
       :isReader="reader"
       data-testid="bookcard"
-      ref="bookcard"
     ></BookCard>
     <p
       class="no-books__text text-s font-semibold"
