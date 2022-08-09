@@ -40,6 +40,7 @@
   --medium-gray: #666A80;
   --gray-color: #8D8D8D; 
   --secondary-background-color:#6049B9;
+  --opacity-background-color:rgba(114, 88, 196, 0.8);
   --primary-font: 'Helvetica Neue', sans-serif;
   --secondary-font: 'Space Grotesk', sans-serif;
 }

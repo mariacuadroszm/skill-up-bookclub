@@ -27,12 +27,19 @@
         </template>
       </BookList>
     </section>
+    <PopUp v-if="displayPopUp" @closePopUp="closePopUp">
+      <p class="pop-up-text text-s font-bold">
+        Your book has been proposed (-:
+      </p>
+      <p class="pop-up-text text-s font-bold">Find it on “Proposed books”</p>
+    </PopUp>
   </main>
 </template>
 
 <script>
 import BookList from "@/components/BookList.vue";
 import MainHeader from "../components/MainHeader.vue";
+import PopUp from "../components/PopUp.vue";
 import EventService from "../services/EventService.js";
 
 export default {
@@ -40,6 +47,7 @@ export default {
   components: {
     BookList,
     MainHeader,
+    PopUp,
   },
   data() {
     return {
@@ -48,9 +56,30 @@ export default {
       proposedBooks: [],
       activeBooks: [],
       homepage: true,
+      displayPopUp: false,
     };
   },
+
+  props: {
+    popUpTrigger: {
+      type: String,
+      default: "false",
+      validator: (propValue) => {
+        return ["true", "false"].includes(propValue);
+      },
+    },
+  },
+
+  methods: {
+    closePopUp() {
+      this.displayPopUp = false;
+    },
+  },
+
   created() {
+    if (this.popUpTrigger === "true") {
+      this.displayPopUp = true;
+    }
     EventService.getProposedBooks(5)
       .then((response) => {
         this.proposedBooks = response.data;

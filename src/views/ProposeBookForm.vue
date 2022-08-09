@@ -139,11 +139,10 @@ export default {
           userId: "abc",
         };
         await EventService.proposeBook(bookData);
-        this.$router.push("/");
+        this.$router.push({ name: "home", params: { popUpTrigger: true } });
       } catch (error) {
         alert("Sorry, your book couldn't be posted. Try it later!");
       }
-      this.$router.push("/");
     },
   },
 };
