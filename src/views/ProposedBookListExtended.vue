@@ -1,19 +1,35 @@
 <template>
   <div class="proposed-books-info-container px-5">
     <MainHeader></MainHeader>
-    <h2 class="proposed-books-info__title">All active clubs</h2>
-    <span class="proposed-books-info__description text-m"
-      >List with current active book clubs
-    </span>
+    <div class="proposed-books">
+      <div class="proposed-books-info">
+        <h2 class="proposed-books-info__title">All proposed books</h2>
+        <span class="proposed-books-info__description text-m"
+          >Find here the list with all proposed books
+        </span>
+      </div>
+
+      <ButtonBC
+        class="font-bold propose-btn"
+        variant="tertiary"
+        @click="proposeBook"
+      >
+        Propose a book<v-icon
+          name="hi-solid-arrow-narrow-right"
+          class="arrow-right-icon"
+        />
+      </ButtonBC>
+    </div>
   </div>
-  <div class="active-clubs-container">
+
+  <div class="proposed-books-container">
     <div class="proposed-books-list px-5">
       <BookCard
         v-for="(book, id) in booksInfoSorted"
         :key="id"
         :book="book"
-        class="extended"
-        :isReader="true"
+        class="extended bookCardExtended"
+        :isReader="false"
       ></BookCard>
     </div>
     <span class="thatsAll text-m">That's all we got (-:</span>
@@ -23,13 +39,15 @@
 <script>
 import MainHeader from "../components/MainHeader.vue";
 import BookCard from "../components/BookCard.vue";
+import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 import EventService from "../services/EventService.js";
 
 export default {
-  name: "ActiveClubsListExtended",
+  name: "ProposedBookListExtended",
   components: {
     MainHeader,
     BookCard,
+    ButtonBC,
   },
   data() {
     return {
@@ -37,7 +55,7 @@ export default {
     };
   },
   created() {
-    EventService.getActiveBooks(50)
+    EventService.getProposedBooks(50)
       .then((response) => {
         this.booksInfo = response.data;
       })
@@ -53,6 +71,11 @@ export default {
       });
     },
   },
+  methods: {
+    proposeBook() {
+      this.$router.push("propose-book-form");
+    },
+  },
 };
 </script>
 
@@ -65,7 +88,8 @@ export default {
   background-color: var(--secondary-background-color);
 }
 
-.proposed-books-info__title {
+.proposed-books-info__title,
+.thatsAll {
   color: var(--white);
 }
 .proposed-books-info__description {
@@ -74,26 +98,22 @@ export default {
   margin-bottom: 1.8rem;
   color: var(--white);
 }
-.active-clubs-container {
+.proposed-books-container {
   background-color: var(--secondary-background-color);
 }
 .proposed-books-list {
   padding-bottom: 1.6rem;
 }
+
+.propose-btn,
 .thatsAll {
-  color: var(--white);
   display: none;
 }
 
 @media (min-width: 768px) {
-  .active-clubs-container {
-    min-height: calc(100vh - 232px);
-  }
+  .propose-btn,
   .thatsAll {
     display: block;
-    text-align: center;
-    padding-top: 14rem;
-    padding-bottom: 13rem;
   }
   .proposed-books-list {
     display: grid;
@@ -111,6 +131,15 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+  .proposed-books-container {
+    min-height: calc(100vh - 232px);
+  }
+  .thatsAll {
+    text-align: center;
+    padding-top: 14rem;
+    padding-bottom: 13rem;
+    background-color: var(--secondary-background-color);
   }
 }
 </style>

@@ -11,10 +11,16 @@ const apiClient = axios.create({
 });
 
 export default {
-  getBookProfile() {
-    return apiClient.get(`clubs/club?id=b2073cce-5afc-4709-9e28-6129f265a3be`);
+  getBookProfile(id) {
+    return apiClient.get(`clubs/club?id=${id}`);
   },
   proposeBook(bookInfo) {
     return apiClient.post("/clubs/club", bookInfo);
+  },
+  getProposedBooks(number) {
+    return apiClient.get(`clubs?status=Proposed&amount=${number}`);
+  },
+  getActiveBooks(number) {
+    return apiClient.get(`clubs?status=Active&amount=${number}`);
   },
 };
