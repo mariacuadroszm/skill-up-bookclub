@@ -88,11 +88,12 @@ export default {
     },
     voteMessage() {
       if (this.isReader && !this.userVoted) {
-        return `Tap "join" to be part of this awesome club.`;
+        return `Tap "join" to be part of this awesome club. Remember it already started!`;
       } else if (this.isReader && this.userVoted) {
         return `Now you're part of this club!`;
       } else if (!this.isReader && !this.userVoted) {
-        return `Tap the "vote" button to be part of our club once it has five or more interested readers`;
+        return `Tap the "vote" button to be part of our club once it has
+        five or more interested readers.`;
       } else {
         return `Now you're part of this club! Once it starts you'll find this book profile on "active clubs"`;
       }

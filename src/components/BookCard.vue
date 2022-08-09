@@ -11,7 +11,7 @@
         data-testid="author"
         class="book-card__info--author one-line-clamp text-l font-normal"
       >
-        {{ authorToLowerCase }}
+        {{ authorCapitalize }}
       </p>
     </div>
     <div class="book-card__footer">
@@ -90,12 +90,20 @@ export default {
       }
     },
     titleCapitalize() {
-      const firstLetter = this.title.charAt(0);
-      const titleLowerCase = this.title.slice(1).toLowerCase();
+      const trimSpaces = this.title.trim();
+      const firstLetter = trimSpaces.charAt(0);
+      const titleLowerCase = trimSpaces.slice(1).toLowerCase();
       return `${firstLetter}${titleLowerCase}`;
     },
-    authorToLowerCase() {
-      return this.author.toLowerCase();
+    authorCapitalize() {
+      const trimSpaces = this.author.trim();
+      const authorName = trimSpaces.split(" ");
+      const authorCapitalize = authorName
+        .map((author) => {
+          return author[0] + author.substring(1).toLowerCase();
+        })
+        .join(" ");
+      return authorCapitalize;
     },
   },
   methods: {
@@ -144,7 +152,7 @@ export default {
 }
 
 .book-card__info--author {
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: var(--quaternary-color);
 }
 

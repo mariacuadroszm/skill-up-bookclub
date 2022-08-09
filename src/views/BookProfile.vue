@@ -5,6 +5,7 @@
   <main v-if="bookInfo && participants">
     <article class="book-profile mx-6">
       <CompleteBookInfo :book="book" :isReader="isReader"></CompleteBookInfo>
+      <ActiveClubMembers :isReader="isReader" :id="id"></ActiveClubMembers>
     </article>
   </main>
 </template>
@@ -13,12 +14,14 @@
 import EventService from "../services/EventService";
 import MainHeader from "../components/MainHeader.vue";
 import CompleteBookInfo from "../components/CompleteBookInfo.vue";
+import ActiveClubMembers from "../components/ActiveClubMembers.vue";
 
 export default {
   name: "BookProfile",
   components: {
     MainHeader,
     CompleteBookInfo,
+    ActiveClubMembers,
   },
   data() {
     return {
