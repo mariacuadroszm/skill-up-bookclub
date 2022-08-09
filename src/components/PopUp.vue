@@ -47,4 +47,15 @@ export default {
 .pop-up__btn {
   margin-top: 3rem;
 }
+
+@media (min-width: 768px) {
+  .pop-up-inner {
+    width: 36rem;
+    padding: 4.4rem 6.3rem;
+  }
+
+  .pop-up__btn {
+    padding: 0.8rem 2.4rem;
+  }
+}
 </style>
