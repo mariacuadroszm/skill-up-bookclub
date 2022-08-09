@@ -12,13 +12,21 @@ const apiClient = axios.create({
 
 export default {
   async getBookProfile(id) {
-    const response = await apiClient.get(`clubs/club?id=${id}`);
-    return response.data.book;
+    try {
+      const response = await apiClient.get(`clubs/club?id=${id}`);
+      return response.data.book;
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
   async getParticipantsCount(id) {
-    const response = await apiClient.get(`/clubs/club/users?id=${id}`);
-    return response.data.count;
+    try {
+      const response = await apiClient.get(`/clubs/club/users?id=${id}`);
+      return response.data.count;
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
   proposeBook(bookInfo) {
