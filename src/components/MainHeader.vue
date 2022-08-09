@@ -1,7 +1,7 @@
 <template>
   <header class="header-container my-7">
     <ButtonBC
-      class="mx-5"
+      class="goBackBtn mx-5"
       data-testid="goBackBtn"
       variant="arrow"
       @click="goBack"
@@ -73,6 +73,10 @@ export default {
   }
   .header__logo {
     width: 24.8rem;
+  }
+
+  .goBackBtn {
+    display: none;
   }
 }
 </style>
