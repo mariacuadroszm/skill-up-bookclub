@@ -6,21 +6,24 @@
       >List with current active book clubs
     </span>
   </div>
-  <div class="proposed-books-list px-5">
-    <BookCard
-      v-for="(book, id) in booksInfoSorted"
-      :key="id"
-      :book="book"
-      class="extended"
-      :isReader="true"
-    ></BookCard>
+  <div class="active-clubs-container">
+    <div class="proposed-books-list px-5">
+      <BookCard
+        v-for="(book, id) in booksInfoSorted"
+        :key="id"
+        :book="book"
+        class="extended"
+        :isReader="true"
+      ></BookCard>
+    </div>
+    <span class="thatsAll text-m">That's all we got (-:</span>
   </div>
 </template>
 
 <script>
-import activeClubs from "../assets/activeData.json";
 import MainHeader from "../components/MainHeader.vue";
 import BookCard from "../components/BookCard.vue";
+import EventService from "../services/EventService.js";
 
 export default {
   name: "ActiveClubsListExtended",
@@ -30,8 +33,17 @@ export default {
   },
   data() {
     return {
-      booksInfo: activeClubs,
+      booksInfo: [],
     };
+  },
+  created() {
+    EventService.getActiveBooks(50)
+      .then((response) => {
+        this.booksInfo = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   computed: {
     booksInfoSorted() {
@@ -62,8 +74,43 @@ export default {
   margin-bottom: 1.8rem;
   color: var(--white);
 }
+.active-clubs-container {
+  background-color: var(--secondary-background-color);
+}
 .proposed-books-list {
   padding-bottom: 1.6rem;
-  background-color: var(--secondary-background-color);
+}
+.thatsAll {
+  color: var(--white);
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .active-clubs-container {
+    min-height: calc(100vh - 232px);
+  }
+  .thatsAll {
+    display: block;
+    text-align: center;
+    padding-top: 14rem;
+    padding-bottom: 13rem;
+  }
+  .proposed-books-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-column-gap: 2.4rem;
+    grid-row-gap: 0.8rem;
+    padding: 0 2.8rem;
+  }
+  .proposed-books-info-container {
+    padding: 0 2.8rem;
+  }
+
+  .proposed-books {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 </style>

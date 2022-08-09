@@ -24,4 +24,10 @@ export default {
   proposeBook(bookInfo) {
     return apiClient.post("/clubs/club", bookInfo);
   },
+  getProposedBooks(number) {
+    return apiClient.get(`clubs?status=Proposed&amount=${number}`);
+  },
+  getActiveBooks(number) {
+    return apiClient.get(`clubs?status=Active&amount=${number}`);
+  },
 };

@@ -7,8 +7,14 @@
       :key="book.id"
       :book="book"
       :isReader="reader"
+      data-testid="bookcard"
+      ref="bookcard"
     ></BookCard>
-    <p class="no-books__text text-s font-semibold" v-if="ifNoAvailableBooks">
+    <p
+      class="no-books__text text-s font-semibold"
+      v-if="ifNoAvailableBooks"
+      data-testid="no-books-message"
+    >
       <slot name="no-books-text"></slot>
     </p>
   </div>
@@ -19,12 +25,14 @@
       variant="primary"
       @click="showAllBooks"
       v-if="!ifNoAvailableBooks"
+      data-testid="show-all-button"
     ></button-bc>
     <button-bc
       class="font-bold propose-btn"
       variant="tertiary"
       @click="proposeBook"
       v-if="displayProposeBtn"
+      data-testid="propose-book-button"
     >
       Propose a book<v-icon
         name="hi-solid-arrow-narrow-right"
@@ -66,7 +74,7 @@ export default {
       if (this.reader) {
         this.$router.push("active-clubs-list");
       } else {
-        this.$router.push("proposed-books-list");
+        this.$router.push("proposed-book-list");
       }
     },
     proposeBook() {
