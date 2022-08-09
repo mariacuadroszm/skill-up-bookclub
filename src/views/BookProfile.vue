@@ -63,7 +63,7 @@ export default {
   async created() {
     try {
       this.bookInfo = await EventService.getBookProfile(this.id);
-      this.participants = await EventService.getParcipantsCount(this.id);
+      this.participants = await EventService.getParticipantsCount(this.id);
     } catch (error) {
       console.error(error);
     }

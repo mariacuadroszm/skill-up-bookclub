@@ -16,7 +16,7 @@ export default {
     return response.data.book;
   },
 
-  async getParcipantsCount(id) {
+  async getParticipantsCount(id) {
     const response = await apiClient.get(`/clubs/club/users?id=${id}`);
     return response.data.count;
   },
