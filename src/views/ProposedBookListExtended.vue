@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import fakeBooks from "../assets/data.json";
 import MainHeader from "../components/MainHeader.vue";
 import BookCard from "../components/BookCard.vue";
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
+import EventService from "../services/EventService.js";
 
 export default {
   name: "ProposedBookListExtended",
@@ -51,8 +51,17 @@ export default {
   },
   data() {
     return {
-      booksInfo: fakeBooks,
+      booksInfo: [],
     };
+  },
+  created() {
+    EventService.getProposedBooks(50)
+      .then((response) => {
+        this.booksInfo = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   computed: {
     booksInfoSorted() {
@@ -62,7 +71,6 @@ export default {
       });
     },
   },
-
   methods: {
     proposeBook() {
       this.$router.push("propose-book-form");
