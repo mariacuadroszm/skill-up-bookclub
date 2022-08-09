@@ -2,7 +2,7 @@
   <header class="header">
     <MainHeader class="mx-6"></MainHeader>
   </header>
-  <main>
+  <main v-if="bookInfo && participants">
     <article class="book-profile mx-6">
       <CompleteBookInfo :book="book" :isReader="isReader"></CompleteBookInfo>
     </article>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import EventService from "../services/EventService";
 import MainHeader from "../components/MainHeader.vue";
 import CompleteBookInfo from "../components/CompleteBookInfo.vue";
 
@@ -20,17 +21,52 @@ export default {
     CompleteBookInfo,
   },
   data() {
-    return {};
+    return {
+      bookInfo: {},
+      participants: 0,
+    };
   },
   props: {
-    book: {
-      type: Object,
+    id: {
+      type: String,
       required: true,
     },
-    isReader: {
-      type: Boolean,
+    reader: {
+      type: String,
       required: true,
     },
+  },
+  computed: {
+    book() {
+      const titleLowerCase = this.bookInfo.title.toLowerCase();
+      const titleCapFirstLetter =
+        titleLowerCase.charAt(0).toUpperCase() + titleLowerCase.slice(1);
+      const authorLowerCase = this.bookInfo.author.toLowerCase();
+
+      return {
+        title: titleCapFirstLetter,
+        author: authorLowerCase,
+        synopsis: this.bookInfo.synopsis,
+        storeUrl: this.bookInfo.storeUrl,
+        participants: this.participants,
+      };
+    },
+    isReader() {
+      if (this.reader === "false") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
+
+  async created() {
+    try {
+      this.bookInfo = await EventService.getBookProfile(this.id);
+      this.participants = await EventService.getParticipantsCount(this.id);
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 </script>
