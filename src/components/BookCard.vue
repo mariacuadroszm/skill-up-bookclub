@@ -110,9 +110,15 @@ export default {
     },
     showBookProfile() {
       if (this.isReader) {
-        return this.$router.push(`/book/active/${this.book.id}`);
+        return this.$router.push({
+          name: "ActiveBookProfile",
+          params: { id: this.book.id, reader: true },
+        });
       } else {
-        return this.$router.push(`/book/proposed/${this.book.id}`);
+        return this.$router.push({
+          name: "ProposedBookProfile",
+          params: { id: this.book.id, reader: false },
+        });
       }
     },
   },
