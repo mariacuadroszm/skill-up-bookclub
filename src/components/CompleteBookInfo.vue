@@ -17,7 +17,7 @@
     </a>
   </button-bc>
   <div class="book-profile__participants--reader" v-if="isReader">
-    <p class="text-s">{{ book.participants }} Readers</p>
+    <p class="text-s">{{ participants }} Readers</p>
   </div>
   <div
     class="book-synopsis"
@@ -31,7 +31,7 @@
     <p class="book-synopsis__info text-m">{{ book.synopsis }}</p>
   </div>
   <div class="book-profile__participants--interested" v-if="!isReader">
-    <p class="text-s">{{ book.participants }} Interested</p>
+    <p class="text-s">{{ participants }} Interested</p>
   </div>
   <button-bc
     class="vote-btn font-medium"
@@ -59,9 +59,10 @@ export default {
   components: {
     "button-bc": ButtonBC,
   },
+  emits: ["updateParticipants"],
   data() {
     return {
-      userVoted: true,
+      userVoted: false,
       bookUrl: this.book.storeUrl,
     };
   },
@@ -72,6 +73,10 @@ export default {
     },
     isReader: {
       type: Boolean,
+      required: true,
+    },
+    participants: {
+      type: Number,
       required: true,
     },
   },
@@ -104,12 +109,12 @@ export default {
       try {
         if (!this.userVoted) {
           await EventService.joinClub("Mar123", this.book.id);
-
           this.userVoted = true;
         } else if (this.userVoted) {
           await EventService.unjoinClub("Mar123", this.book.id);
           this.userVoted = false;
         }
+        this.$emit("updateParticipants");
       } catch (error) {
         console.error(error);
         console.log(this.book.id);

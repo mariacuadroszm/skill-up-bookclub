@@ -4,7 +4,12 @@
   </header>
   <main v-if="bookInfo && participants">
     <article class="book-profile mx-6">
-      <CompleteBookInfo :book="book" :isReader="isReader"></CompleteBookInfo>
+      <CompleteBookInfo
+        :book="book"
+        :isReader="isReader"
+        :participants="participants"
+        @updateParticipants="updateParticipants"
+      ></CompleteBookInfo>
     </article>
   </main>
 </template>
@@ -49,7 +54,6 @@ export default {
         author: authorLowerCase,
         synopsis: this.bookInfo.synopsis,
         storeUrl: this.bookInfo.storeUrl,
-        participants: this.participants,
       };
     },
     isReader() {
@@ -57,6 +61,16 @@ export default {
         return false;
       } else {
         return true;
+      }
+    },
+  },
+
+  methods: {
+    async updateParticipants() {
+      try {
+        this.participants = await EventService.getParticipantsCount(this.id);
+      } catch (error) {
+        console.error(error);
       }
     },
   },
