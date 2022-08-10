@@ -21,9 +21,7 @@ describe("Testing UI: Complete book info", () => {
 
   test("Should render a 'Where to buy' button", () => {
     const wrapper = mount(CompleteBookInfo, {
-      props: {
-        book: {},
-      },
+      props: { book: {} },
     });
 
     const buyBtn = wrapper.find('[data-testid="buyBtn"]');

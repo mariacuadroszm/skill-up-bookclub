@@ -1,18 +1,23 @@
 <template>
   <div v-if="isReader" class="members my-10">
-    <h2 class="members__title">List of members</h2>
+    <h2 class="members__title" data-testid="title">List of members</h2>
     <ul class="members__list">
       <li
         v-for="(member, index) in membersList"
         class="members__list--item text-m"
         :key="member"
+        data-testid="member"
       >
         {{ index + 1 }} {{ member.name }}
       </li>
     </ul>
-    <p @click="fullList" class="full-members__list text-s">
+    <span
+      @click="fullList"
+      class="full-members__list text-s"
+      data-testid="full-list"
+    >
       + Let's see the full list of members!
-    </p>
+    </span>
   </div>
 </template>
 
