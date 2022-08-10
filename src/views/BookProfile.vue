@@ -64,6 +64,7 @@ export default {
   },
 
   async created() {
+    console.log(this.reader);
     try {
       this.bookInfo = await EventService.getBookProfile(this.id);
       this.participants = await EventService.getParticipantsCount(this.id);

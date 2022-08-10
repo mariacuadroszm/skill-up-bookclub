@@ -1,23 +1,29 @@
 <template>
   <v-icon name="bi-book" scale="3" class="book-icon" />
-  <h2 class="book-profile__title">{{ book.title }}</h2>
-  <p class="book-profile__author text-l font-medium">{{ book.author }}</p>
+  <h2 class="book-profile__title" data-testid="title">{{ book.title }}</h2>
+  <p class="book-profile__author text-l font-medium" data-testid="author">
+    {{ book.author }}
+  </p>
   <button-bc
     class="buy-btn"
     variant="secondary"
     :class="[isReader ? 'buy-btn--margin-readers' : 'buy-btn--margin-synopsis']"
+    data-testid="buyBtn"
   >
     <a
       :href="bookUrl"
       target="_blank"
       rel="noopener noreferrer"
       class="font-bold buy-btn__url"
+      data-testid="url"
     >
       Where to buy?
     </a>
   </button-bc>
   <div class="book-profile__participants--reader" v-if="isReader">
-    <p class="text-s">{{ book.participants }} Readers</p>
+    <p class="text-s" data-testid="participants">
+      {{ book.participants }} Readers
+    </p>
   </div>
   <div
     class="book-synopsis"
@@ -27,17 +33,25 @@
         : 'book-synopsis--margin-vote-btn',
     ]"
   >
-    <p class="book-synopsis__title text-xl font-semibold">Synopsis</p>
+    <p
+      class="book-synopsis__title text-xl font-semibold"
+      data-testid="synopsis"
+    >
+      Synopsis
+    </p>
     <p class="book-synopsis__info text-m">{{ book.synopsis }}</p>
   </div>
   <div class="book-profile__participants--interested" v-if="!isReader">
-    <p class="text-s">{{ book.participants }} Interested</p>
+    <p class="text-s" data-testid="participants">
+      {{ book.participants }} Interested
+    </p>
   </div>
   <button-bc
     class="vote-btn font-medium"
     variant="secondary"
     @click="addVote"
     :class="{ 'user-vote': userVoted }"
+    data-testid="textBtn"
   >
     {{ textBtn }}
     <span v-if="!userVoted"
@@ -47,7 +61,9 @@
       ><v-icon name="hi-solid-check" scale="0.8" class="icon"
     /></span>
   </button-bc>
-  <p class="book-profile__info text-s font-normal">{{ voteMessage }}</p>
+  <p class="book-profile__info text-s font-normal" data-testid="message">
+    {{ voteMessage }}
+  </p>
 </template>
 
 <script>
@@ -92,8 +108,7 @@ export default {
       } else if (this.isReader && this.userVoted) {
         return `Now you're part of this club!`;
       } else if (!this.isReader && !this.userVoted) {
-        return `Tap the "vote" button to be part of our club once it has
-        five or more interested readers.`;
+        return `Tap the "vote" button to be part of our club once it has five or more interested readers.`;
       } else {
         return `Now you're part of this club! Once it starts you'll find this book profile on "active clubs"`;
       }

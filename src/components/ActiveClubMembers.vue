@@ -34,7 +34,7 @@ export default {
     },
     isReader: {
       type: Boolean,
-      required: true,
+      default: false,
     },
   },
   created() {

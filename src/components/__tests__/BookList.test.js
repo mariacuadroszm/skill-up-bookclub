@@ -103,23 +103,7 @@ describe("Testing UI: Book List", () => {
 
   test("Does not render the 'Show All' button when there are no proposed books", () => {
     const wrapper = mount(BookList, {
-      props: {
-        books: [
-          {
-            book: {
-              id: 1,
-              title: "In Search of Lost Time",
-              author: "Marcel Proust",
-              participants: 3,
-            },
-          },
-        ],
-      },
-      computed: {
-        ifNoAvailableBooks() {
-          return true;
-        },
-      },
+      props: { books: [] },
     });
 
     const showAllBtn = wrapper.find('[data-testid="show-all-button"]');
@@ -149,23 +133,7 @@ describe("Testing UI: Book List", () => {
 
   test("Should render a message when there are no proposed or active books", () => {
     const wrapper = mount(BookList, {
-      props: {
-        books: [
-          {
-            book: {
-              id: 1,
-              title: "In Search of Lost Time",
-              author: "Marcel Proust",
-              participants: 3,
-            },
-          },
-        ],
-      },
-      computed: {
-        ifNoAvailableBooks() {
-          return true;
-        },
-      },
+      props: { books: [] },
     });
 
     const noBooksMsg = wrapper.find('[data-testid="no-books-message"]');
