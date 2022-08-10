@@ -8,6 +8,8 @@
       :book="book"
       :isReader="reader"
       data-testid="bookcard"
+      @updateProposedParticipants="updateProposedParticipants"
+      @updateClubsParticipants="updateClubsParticipants"
     ></BookCard>
     <p
       class="no-books__text text-s font-semibold"
@@ -51,6 +53,7 @@ export default {
     BookCard,
     "button-bc": ButtonBC,
   },
+  emits: ["updateProposedBooksParticipants", "updateActiveClubsParticipants"],
   data() {
     return {};
   },
@@ -78,6 +81,12 @@ export default {
     },
     proposeBook() {
       this.$router.push("propose-book-form");
+    },
+    updateProposedParticipants() {
+      this.$emit("updateProposedBooksParticipants");
+    },
+    updateClubsParticipants() {
+      this.$emit("updateActiveClubsParticipants");
     },
   },
   computed: {

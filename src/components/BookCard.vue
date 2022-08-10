@@ -60,6 +60,7 @@ export default {
   components: {
     "button-bc": ButtonBC,
   },
+  emits: ["updateClubsParticipants", "updateProposedParticipants"],
   data() {
     return {
       userVoted: false,
@@ -102,13 +103,21 @@ export default {
   methods: {
     async addVote() {
       try {
-        if (this.userVoted == false) {
+        if (!this.userVoted && this.isReader) {
           await EventService.joinClub("Mar123", this.book.id);
-          this.participants = this.participants + 1;
+          this.$emit("updateClubsParticipants");
           this.userVoted = true;
-        } else {
+        } else if (this.userVoted && this.isReader) {
           await EventService.unjoinClub("Mar123", this.book.id);
-          this.participants = this.participants - 1;
+          this.$emit("updateClubsParticipants");
+          this.userVoted = false;
+        } else if (!this.userVoted && !this.isReader) {
+          await EventService.joinClub("Mar123", this.book.id);
+          this.$emit("updateProposedParticipants");
+          this.userVoted = true;
+        } else if (this.userVoted && !this.isReader) {
+          await EventService.unjoinClub("Mar123", this.book.id);
+          this.$emit("updateProposedParticipants");
           this.userVoted = false;
         }
       } catch (error) {
