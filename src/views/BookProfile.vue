@@ -44,6 +44,7 @@ export default {
       const authorLowerCase = this.bookInfo.author.toLowerCase();
 
       return {
+        id: this.id,
         title: titleCapFirstLetter,
         author: authorLowerCase,
         synopsis: this.bookInfo.synopsis,

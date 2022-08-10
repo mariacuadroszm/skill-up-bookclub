@@ -52,6 +52,7 @@
 
 <script>
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
+import EventService from "../services/EventService";
 
 export default {
   name: "CompleteBookInfo",
@@ -60,7 +61,7 @@ export default {
   },
   data() {
     return {
-      userVoted: false,
+      userVoted: true,
       bookUrl: this.book.storeUrl,
     };
   },
@@ -99,19 +100,19 @@ export default {
     },
   },
   methods: {
-    addVote() {
-      if (this.isReader && !this.userVoted) {
-        this.participants = this.participants + 1;
-        this.userVoted = true;
-      } else if (this.isReader && this.userVoted) {
-        this.participants = this.participants - 1;
-        this.userVoted = false;
-      } else if (!this.isReader && !this.userVoted) {
-        this.participants = this.participants + 1;
-        this.userVoted = true;
-      } else {
-        this.participants = this.participants - 1;
-        this.userVoted = false;
+    async addVote() {
+      try {
+        if (!this.userVoted) {
+          await EventService.joinClub("Mar123", this.book.id);
+
+          this.userVoted = true;
+        } else if (this.userVoted) {
+          await EventService.unjoinClub("Mar123", this.book.id);
+          this.userVoted = false;
+        }
+      } catch (error) {
+        console.error(error);
+        console.log(this.book.id);
       }
     },
   },
