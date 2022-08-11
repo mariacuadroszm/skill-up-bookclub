@@ -5,11 +5,7 @@
   ></MainHeader>
   <main>
     <section class="container proposed-books">
-      <BookList
-        :reader="false"
-        :books="proposedBooks"
-        @updateProposedBooksParticipants="updateProposedBooksParticipants"
-      >
+      <BookList :reader="false" :books="proposedBooks">
         <template v-slot:title>Proposed books</template>
         <template v-slot:description
           >Vote for the books you want to read
@@ -21,12 +17,7 @@
     </section>
 
     <section class="container active-clubs">
-      <BookList
-        :displayProposeBtn="false"
-        :reader="true"
-        :books="activeBooks"
-        @updateActiveClubsParticipants="updateActiveClubsParticipants"
-      >
+      <BookList :displayProposeBtn="false" :reader="true" :books="activeBooks">
         <template v-slot:title>Active clubs</template>
         <template v-slot:description
           >Find active book clubs and their members
@@ -82,26 +73,6 @@ export default {
   methods: {
     closePopUp() {
       this.displayPopUp = false;
-    },
-    updateProposedBooksParticipants() {
-      console.log("si está funcionando el update de libros propuestos");
-      EventService.getProposedBooks(5)
-        .then((response) => {
-          this.proposedBooks = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    updateActiveClubsParticipants() {
-      console.log("si está funcionando el update de clubs activos");
-      EventService.getActiveBooks(5)
-        .then((response) => {
-          this.activeBooks = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
 

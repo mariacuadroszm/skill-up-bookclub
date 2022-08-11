@@ -30,7 +30,6 @@
         :book="book"
         class="extended bookCardExtended"
         :isReader="false"
-        @updateProposedParticipants="updateProposedParticipants"
       ></BookCard>
     </div>
     <span class="thatsAll text-m">That's all we got (-:</span>
@@ -75,16 +74,6 @@ export default {
   methods: {
     proposeBook() {
       this.$router.push("propose-book-form");
-    },
-    updateProposedParticipants() {
-      console.log("proposed list update working ");
-      EventService.getProposedBooks(50)
-        .then((response) => {
-          this.booksInfo = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
 };

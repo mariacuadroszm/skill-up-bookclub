@@ -62,7 +62,7 @@ export default {
   emits: ["updateParticipants"],
   data() {
     return {
-      userVoted: false,
+      userVoted: true,
       bookUrl: this.book.storeUrl,
     };
   },

@@ -14,7 +14,6 @@
         :book="book"
         class="extended"
         :isReader="true"
-        @updateClubsParticipants="updateClubsParticipants"
       ></BookCard>
     </div>
     <span class="thatsAll text-m">That's all we got (-:</span>
@@ -52,18 +51,6 @@ export default {
       return booksCopy.sort(function (a, b) {
         return b.participants - a.participants;
       });
-    },
-  },
-  methods: {
-    updateClubsParticipants() {
-      console.log("active club list update working ");
-      EventService.getActiveBooks(50)
-        .then((response) => {
-          this.booksInfo = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
 };
