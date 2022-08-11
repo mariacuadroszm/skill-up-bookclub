@@ -77,8 +77,8 @@ export default {
     },
   },
   async created() {
-    console.log(this.reader);
     try {
+      console.log(this.reader);
       this.bookInfo = await EventService.getBookProfile(this.id);
       this.participants = await EventService.getParticipantsCount(this.id);
     } catch (error) {
