@@ -15,7 +15,7 @@ export default {
   async getBookProfile(id) {
     try {
       const response = await apiClient.get(`clubs/club?id=${id}`);
-      return response.data.book;
+      return response.data;
     } catch (error) {
       console.error(error);
     }

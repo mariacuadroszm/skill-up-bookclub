@@ -127,12 +127,12 @@ export default {
       if (this.isReader) {
         return this.$router.push({
           name: "ActiveBookProfile",
-          params: { id: this.book.id, reader: true },
+          params: { id: this.book.id },
         });
       } else {
         return this.$router.push({
           name: "ProposedBookProfile",
-          params: { id: this.book.id, reader: false },
+          params: { id: this.book.id },
         });
       }
     },

@@ -39,28 +39,24 @@ export default {
       type: String,
       required: true,
     },
-    reader: {
-      type: String,
-      required: true,
-    },
   },
   computed: {
     book() {
-      const titleLowerCase = this.bookInfo.title.toLowerCase();
+      const titleLowerCase = this.bookInfo.book.title.toLowerCase();
       const titleCapFirstLetter =
         titleLowerCase.charAt(0).toUpperCase() + titleLowerCase.slice(1);
-      const authorLowerCase = this.bookInfo.author.toLowerCase();
+      const authorLowerCase = this.bookInfo.book.author.toLowerCase();
 
       return {
         id: this.id,
         title: titleCapFirstLetter,
         author: authorLowerCase,
-        synopsis: this.bookInfo.synopsis,
-        storeUrl: this.bookInfo.storeUrl,
+        synopsis: this.bookInfo.book.synopsis,
+        storeUrl: this.bookInfo.book.storeUrl,
       };
     },
     isReader() {
-      if (this.reader === "false") {
+      if (this.bookInfo.status === "Proposed") {
         return false;
       } else {
         return true;
@@ -78,7 +74,6 @@ export default {
   },
   async created() {
     try {
-      console.log(this.reader);
       this.bookInfo = await EventService.getBookProfile(this.id);
       this.participants = await EventService.getParticipantsCount(this.id);
     } catch (error) {
