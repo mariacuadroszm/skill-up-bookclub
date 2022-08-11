@@ -111,7 +111,7 @@ export default {
           await EventService.joinClub("Mar123", this.book.id);
           this.userVoted = true;
         } else if (this.userVoted) {
-          await EventService.unjoinClub("Mar123", this.book.id);
+          await EventService.leaveClub("Mar123", this.book.id);
           this.userVoted = false;
         }
         this.$emit("updateParticipants");

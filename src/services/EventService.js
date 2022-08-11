@@ -45,7 +45,7 @@ export default {
       `/users/user/club/join?id=${userId}&clubId=${clubId}`
     );
   },
-  unjoinClub(userId, clubId) {
+  leaveClub(userId, clubId) {
     return apiClient.patch(
       `/users/user/club/unjoin?id=${userId}&clubId=${clubId}`
     );

@@ -107,7 +107,7 @@ export default {
           this.participants = this.participants + 1;
           this.userVoted = true;
         } else {
-          await EventService.unjoinClub("Mar123", this.book.id);
+          await EventService.leaveClub("Mar123", this.book.id);
           this.participants = this.participants - 1;
           this.userVoted = false;
         }
