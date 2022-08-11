@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: "/propose-book-form",
       name: "proposeBookForm",
-      component: ProposeBookForm,
+      component: ProposeBookForm,  // REMEMBER TO ERASE
     },
     {
       path: "/proposed-book-list",

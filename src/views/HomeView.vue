@@ -5,7 +5,11 @@
   ></MainHeader>
   <main>
     <section class="container proposed-books">
-      <BookList :reader="false" :books="proposedBooks">
+      <BookList
+        :reader="false"
+        :books="proposedBooks"
+        @displayPropBookForm="proposeBookFormTrigger"
+      >
         <template v-slot:title>Proposed books</template>
         <template v-slot:description
           >Vote for the books you want to read
@@ -27,12 +31,24 @@
         </template>
       </BookList>
     </section>
-    <PopUp v-if="displayPopUp" @closePopUp="closePopUp">
+
+    <PopUp v-if="displayPopUp" @popUpTrigger="popUpTrigger">
       <p class="pop-up-text text-s font-bold">
         Your book has been proposed (-:
       </p>
       <p class="pop-up-text text-s font-bold">Find it on “Proposed books”</p>
     </PopUp>
+
+    <ModalView
+      v-if="displayProposeBookForm"
+      class="propose-book-form-view"
+      @proposeBookFormTrigger="proposeBookFormTrigger"
+    >
+      <BookForm
+        @proposeBookFormTrigger="proposeBookFormTrigger"
+        @popUpTrigger="popUpTrigger"
+      ></BookForm>
+    </ModalView>
   </main>
 </template>
 
@@ -40,6 +56,8 @@
 import BookList from "@/components/BookList.vue";
 import MainHeader from "../components/MainHeader.vue";
 import PopUp from "../components/PopUp.vue";
+import ModalView from "../components/ModalView.vue";
+import BookForm from "../components/BookForm.vue";
 import EventService from "../services/EventService.js";
 
 export default {
@@ -48,6 +66,8 @@ export default {
     BookList,
     MainHeader,
     PopUp,
+    ModalView,
+    BookForm,
   },
   data() {
     return {
@@ -57,29 +77,20 @@ export default {
       activeBooks: [],
       homepage: true,
       displayPopUp: false,
+      displayProposeBookForm: false,
     };
   },
 
-  props: {
-    popUpTrigger: {
-      type: String,
-      default: "false",
-      validator: (propValue) => {
-        return ["true", "false"].includes(propValue);
-      },
-    },
-  },
-
   methods: {
-    closePopUp() {
-      this.displayPopUp = false;
+    popUpTrigger() {
+      this.displayPopUp = !this.displayPopUp;
+    },
+    proposeBookFormTrigger() {
+      this.displayProposeBookForm = !this.displayProposeBookForm;
     },
   },
 
   created() {
-    if (this.popUpTrigger === "true") {
-      this.displayPopUp = true;
-    }
     EventService.getProposedBooks(5)
       .then((response) => {
         this.proposedBooks = response.data;

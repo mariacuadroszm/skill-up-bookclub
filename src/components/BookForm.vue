@@ -1,6 +1,4 @@
 <template>
-  <MainHeader class="main-header px-5"></MainHeader>
-
   <main class="propose-book-main px-5">
     <div class="propose-book-container">
       <div class="propose-book-info-container">
@@ -74,9 +72,7 @@
         <ButtonBC
           type="submit"
           :disabled="buttonDisable"
-          :class="[
-            buttonDisable ? (variant = 'disabled') : (variant = 'primary')
-          ]"
+          :variant="buttonDisable ? 'disabled' : 'primary'"
           class="submit-button"
         >
           Let's propose this book!
@@ -96,16 +92,16 @@
 <script>
 import EventService from "../services/EventService";
 import FormLabel from "../components/FormLabel.vue";
-import MainHeader from "../components/MainHeader.vue";
+
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
-  name: "ProposeBookForm",
+  name: "BookForm",
   components: {
     FormLabel,
-    MainHeader,
     ButtonBC,
   },
+  emits: ["popUpTrigger", "proposeBookFormTrigger"],
 
   data() {
     return {
@@ -139,7 +135,8 @@ export default {
           userId: "abc",
         };
         await EventService.proposeBook(bookData);
-        this.$router.push({ name: "home", params: { popUpTrigger: true } });
+        this.$emit("proposeBookFormTrigger");
+        this.$emit("popUpTrigger");
       } catch (error) {
         alert("Sorry, your book couldn't be posted. Try it later!");
       }
