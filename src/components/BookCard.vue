@@ -53,6 +53,7 @@
 
 <script>
 import ButtonBC from "./ui-components/ButtonComponent.vue";
+import EventService from "../services/EventService";
 
 export default {
   name: "BookCard",
@@ -107,13 +108,19 @@ export default {
     },
   },
   methods: {
-    addVote() {
-      if (this.userVoted == false) {
-        this.participants = this.participants + 1;
-        this.userVoted = true;
-      } else {
-        this.participants = this.participants - 1;
-        this.userVoted = false;
+    async addVote() {
+      try {
+        if (!this.userVoted) {
+          await EventService.joinClub("Mar123", this.book.id);
+          this.participants = this.participants + 1;
+          this.userVoted = true;
+        } else {
+          await EventService.leaveClub("Mar123", this.book.id);
+          this.participants = this.participants - 1;
+          this.userVoted = false;
+        }
+      } catch (error) {
+        console.error(error);
       }
     },
     showBookProfile() {
@@ -152,7 +159,6 @@ export default {
 }
 
 .book-card__info--author {
-  /* text-transform: capitalize; */
   color: var(--quaternary-color);
 }
 

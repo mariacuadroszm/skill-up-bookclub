@@ -4,7 +4,12 @@
   </header>
   <main v-if="bookInfo && participants">
     <article class="book-profile mx-6">
-      <CompleteBookInfo :book="book" :isReader="isReader"></CompleteBookInfo>
+      <CompleteBookInfo
+        :book="book"
+        :isReader="isReader"
+        :participants="participants"
+        @updateParticipants="updateParticipants"
+      ></CompleteBookInfo>
       <ActiveClubMembers :isReader="isReader" :id="id"></ActiveClubMembers>
     </article>
   </main>
@@ -47,11 +52,11 @@ export default {
       const authorLowerCase = this.bookInfo.author.toLowerCase();
 
       return {
+        id: this.id,
         title: titleCapFirstLetter,
         author: authorLowerCase,
         synopsis: this.bookInfo.synopsis,
         storeUrl: this.bookInfo.storeUrl,
-        participants: this.participants,
       };
     },
     isReader() {
@@ -62,7 +67,15 @@ export default {
       }
     },
   },
-
+  methods: {
+    async updateParticipants() {
+      try {
+        this.participants = await EventService.getParticipantsCount(this.id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
   async created() {
     console.log(this.reader);
     try {

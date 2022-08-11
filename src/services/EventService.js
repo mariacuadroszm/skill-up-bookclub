@@ -6,6 +6,7 @@ const apiClient = axios.create({
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
+    "Access-Control-Allow-Methods": "GET, POST,PATCH",
   },
   mode: "no-cors",
 });
@@ -45,5 +46,16 @@ export default {
     } catch (error) {
       console.error(error);
     }
+  },
+
+  joinClub(userId, clubId) {
+    return apiClient.patch(
+      `/users/user/club/join?id=${userId}&clubId=${clubId}`
+    );
+  },
+  leaveClub(userId, clubId) {
+    return apiClient.patch(
+      `/users/user/club/unjoin?id=${userId}&clubId=${clubId}`
+    );
   },
 };

@@ -21,9 +21,7 @@
     </a>
   </button-bc>
   <div class="book-profile__participants--reader" v-if="isReader">
-    <p class="text-s" data-testid="participants">
-      {{ book.participants }} Readers
-    </p>
+    <p class="text-s" data-testid="participants">{{ participants }} Readers</p>
   </div>
   <div
     class="book-synopsis"
@@ -43,7 +41,7 @@
   </div>
   <div class="book-profile__participants--interested" v-if="!isReader">
     <p class="text-s" data-testid="participants">
-      {{ book.participants }} Interested
+      {{ participants }} Interested
     </p>
   </div>
   <button-bc
@@ -68,12 +66,14 @@
 
 <script>
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
+import EventService from "../services/EventService";
 
 export default {
   name: "CompleteBookInfo",
   components: {
     "button-bc": ButtonBC,
   },
+  emits: ["updateParticipants"],
   data() {
     return {
       userVoted: false,
@@ -87,6 +87,10 @@ export default {
     },
     isReader: {
       type: Boolean,
+      required: true,
+    },
+    participants: {
+      type: Number,
       required: true,
     },
   },
@@ -115,19 +119,18 @@ export default {
     },
   },
   methods: {
-    addVote() {
-      if (this.isReader && !this.userVoted) {
-        this.participants = this.participants + 1;
-        this.userVoted = true;
-      } else if (this.isReader && this.userVoted) {
-        this.participants = this.participants - 1;
-        this.userVoted = false;
-      } else if (!this.isReader && !this.userVoted) {
-        this.participants = this.participants + 1;
-        this.userVoted = true;
-      } else {
-        this.participants = this.participants - 1;
-        this.userVoted = false;
+    async addVote() {
+      try {
+        if (!this.userVoted) {
+          await EventService.joinClub("Mar123", this.book.id);
+          this.userVoted = true;
+        } else if (this.userVoted) {
+          await EventService.leaveClub("Mar123", this.book.id);
+          this.userVoted = false;
+        }
+        this.$emit("updateParticipants");
+      } catch (error) {
+        console.error(error);
       }
     },
   },
