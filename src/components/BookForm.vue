@@ -111,6 +111,7 @@ export default {
       synopsis: "",
     };
   },
+
   computed: {
     titleUpperCase() {
       return this.title.toUpperCase();
@@ -122,6 +123,7 @@ export default {
       return !(this.title && this.author && this.link && this.synopsis);
     },
   },
+
   methods: {
     async submitForm() {
       try {

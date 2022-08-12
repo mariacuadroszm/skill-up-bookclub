@@ -92,15 +92,6 @@ export default {
     };
   },
 
-  methods: {
-    popUpTrigger() {
-      this.displayPopUp = !this.displayPopUp;
-    },
-    proposeBookFormTrigger() {
-      this.displayProposeBookForm = !this.displayProposeBookForm;
-    },
-  },
-
   created() {
     if (this.displayBookForm === "true") {
       this.displayProposeBookForm = true;
@@ -119,6 +110,15 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+  },
+
+  methods: {
+    popUpTrigger() {
+      this.displayPopUp = !this.displayPopUp;
+    },
+    proposeBookFormTrigger() {
+      this.displayProposeBookForm = !this.displayProposeBookForm;
+    },
   },
 };
 </script>
