@@ -10,7 +10,7 @@
         :participants="participants"
         @updateParticipants="updateParticipants"
       ></CompleteBookInfo>
-      <ActiveClubMembers :isReader="isReader" :id="id"></ActiveClubMembers>
+      <ActiveClubMembers v-if="isReader" :id="id"></ActiveClubMembers>
     </article>
   </main>
 </template>

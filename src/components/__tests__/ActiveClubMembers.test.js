@@ -3,22 +3,6 @@ import ActiveClubMembers from "../ActiveClubMembers.vue";
 import { describe, expect, test } from "vitest";
 
 describe("Testing UI: Lists of members", () => {
-  test("Does not render the component if isReader is false", () => {
-    const wrapper = mount(ActiveClubMembers, {
-      props: { isReader: false },
-    });
-
-    expect(wrapper.isVisible()).toBe(false);
-  });
-
-  test("Should render the component if isReader is true", () => {
-    const wrapper = mount(ActiveClubMembers, {
-      props: { isReader: true },
-    });
-
-    expect(wrapper.exists()).toBe(true);
-  });
-
   test("Should render the title", () => {
     const wrapper = mount(ActiveClubMembers, {
       props: { isReader: true },

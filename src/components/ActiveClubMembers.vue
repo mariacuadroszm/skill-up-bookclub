@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isReader" class="members my-10">
+  <div class="members my-10">
     <h2 class="members__title" data-testid="title">List of members</h2>
     <ul class="members__list">
       <li
@@ -36,10 +36,6 @@ export default {
     id: {
       type: String,
       required: true,
-    },
-    isReader: {
-      type: Boolean,
-      default: false,
     },
   },
   created() {
