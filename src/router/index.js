@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import ProposeBookForm from "../views/ProposeBookForm.vue";
 import ProposedBookListExtended from "../views/ProposedBookListExtended.vue";
 import BookProfile from "../views/BookProfile.vue";
 import ActiveClubsListExtended from "../views/ActiveClubsListExtended.vue";
@@ -13,11 +12,6 @@ const router = createRouter({
       name: "home",
       component: HomeView,
       props: true,
-    },
-    {
-      path: "/propose-book-form",
-      name: "proposeBookForm",
-      component: ProposeBookForm,  // REMEMBER TO ERASE
     },
     {
       path: "/proposed-book-list",
