@@ -8,7 +8,7 @@
     <div class="pop-up-inner">
       <div class="close-btn-container">
         <ButtonBC class="close__btn" variant="close" @click="closePopUp">
-          <v-icon name="oi-arrow-left" scale="2" fill="black" />
+          <v-icon name="bi-x-lg" scale="2" fill="black" />
         </ButtonBC>
       </div>
       <slot></slot>
@@ -36,7 +36,7 @@ export default {
 
 <style scoped>
 .pop-up-container {
-  padding-inline: 1.6rem;
+  padding: 1.6rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,8 +67,8 @@ export default {
 @media (min-width: 768px) {
   .pop-up-container {
     background-color: var(--opacity-background-color);
-    position: fixed;
-    top: 0;
+    top: -16.2rem;
+    bottom: 0;
   }
   .main-header {
     display: none;

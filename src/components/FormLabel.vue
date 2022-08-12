@@ -35,4 +35,14 @@ export default {
   font-weight: 700;
   display: flex;
 }
+@media (min-width: 768px) {
+  .label__description {
+    font-size: 2.4rem;
+    line-height: 3rem;
+  }
+
+  .label-container {
+    margin-top: 2.4rem;
+  }
+}
 </style>

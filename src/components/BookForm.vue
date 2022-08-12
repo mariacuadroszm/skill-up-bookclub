@@ -1,5 +1,5 @@
 <template>
-  <main class="propose-book-main px-5">
+  <main class="propose-book-main">
     <div class="propose-book-container">
       <div class="propose-book-info-container">
         <h2 class="propose-book__title">Book's information</h2>
@@ -146,9 +146,6 @@ export default {
 </script>
 
 <style scoped>
-.propose-book-main {
-  padding-bottom: 1.6rem;
-}
 .propose-book-container {
   min-height: 75vh;
   padding: 1.4rem;
@@ -183,5 +180,31 @@ export default {
 }
 .icon-arrow-right {
   margin-left: 1rem;
+}
+
+@media (min-width: 768px) {
+  .propose-book-container {
+    padding: 1rem 5rem;
+  }
+  .propose-book__title {
+    font-size: 3.6rem;
+    line-height: 4.6rem;
+  }
+
+  .propose-book__description {
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+  }
+
+  .label__input {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    margin-top: 1.6rem;
+  }
+
+  .propose-book__final--note {
+    font-size: 1.3rem;
+    line-height: 1.7rem;
+  }
 }
 </style>

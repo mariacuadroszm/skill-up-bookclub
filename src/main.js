@@ -10,6 +10,7 @@ import {
   IoSearch,
   BiBook,
   HiSolidPlus,
+  BiXLg,
 } from "oh-vue-icons/icons";
 
 addIcons(
@@ -18,7 +19,8 @@ addIcons(
   HiSolidPlus,
   HiSolidCheck,
   IoSearch,
-  BiBook
+  BiBook,
+  BiXLg
 );
 
 const app = createApp(App);
