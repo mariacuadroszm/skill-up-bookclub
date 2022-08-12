@@ -51,7 +51,7 @@ describe("Testing UI: Lists of members", () => {
     expect(members.length).toBe(5);
   });
 
-  test("Should render a span that when clicked, the full list of members will be rendered", async () => {
+  test("Should render a span that when clicked, the full list of members will be rendered", () => {
     const wrapper = mount(ActiveClubMembers, {
       props: { isReader: true },
     });
@@ -60,7 +60,7 @@ describe("Testing UI: Lists of members", () => {
     expect(span.exists()).toBe(true);
   });
 
-  test("Should render the full list of members once the span has been clicked", async () => {
+  test("Should render the full list of members once the span has been clicked", () => {
     const wrapper = mount(ActiveClubMembers, {
       data() {
         return {
