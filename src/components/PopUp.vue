@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     closePopUp() {
-      this.$emit("closePopUp");
+      this.$emit("popUpTrigger");
     },
   },
 };

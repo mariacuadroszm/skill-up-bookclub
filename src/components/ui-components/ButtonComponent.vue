@@ -7,6 +7,7 @@
       tertiary: isTertiary,
       arrow: isAnArrow,
       disabled: isDisabled,
+      close: isCloseX,
     }"
   >
     <slot>Show all</slot>
@@ -27,6 +28,7 @@ export default {
           "tertiary",
           "arrow",
           "disabled",
+          "close",
         ].includes(propValue);
       },
     },
@@ -49,6 +51,9 @@ export default {
     },
     isDisabled() {
       return this.variant === "disabled";
+    },
+    isCloseX() {
+      return this.variant === "close";
     },
   },
 };
@@ -102,6 +107,12 @@ export default {
   .tertiary {
     padding-left: 6rem;
     padding-right: 6rem;
+  }
+
+  .close {
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
   }
 }
 </style>

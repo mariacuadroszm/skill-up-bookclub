@@ -51,6 +51,7 @@ export default {
     BookCard,
     "button-bc": ButtonBC,
   },
+  emits: ["displayPropBookForm"],
   data() {
     return {};
   },
@@ -77,7 +78,7 @@ export default {
       }
     },
     proposeBook() {
-      this.$router.push("propose-book-form");
+      this.$emit("displayPropBookForm");
     },
   },
   computed: {

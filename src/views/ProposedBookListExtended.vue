@@ -73,7 +73,10 @@ export default {
   },
   methods: {
     proposeBook() {
-      this.$router.push("propose-book-form");
+      this.$router.push({
+        name: "home",
+        params: { displayBookForm: true },
+      });
     },
   },
 };

@@ -1,7 +1,5 @@
 <template>
-  <MainHeader class="main-header px-5"></MainHeader>
-
-  <main class="px-5">
+  <main class="propose-book-main">
     <div class="propose-book-container">
       <div class="propose-book-info-container">
         <h2 class="propose-book__title">Book's information</h2>
@@ -74,9 +72,7 @@
         <ButtonBC
           type="submit"
           :disabled="buttonDisable"
-          :class="[
-            buttonDisable ? (variant = 'disabled') : (variant = 'primary'),
-          ]"
+          :variant="buttonDisable ? 'disabled' : 'primary'"
           class="submit-button"
         >
           Let's propose this book!
@@ -96,16 +92,16 @@
 <script>
 import EventService from "../services/EventService";
 import FormLabel from "../components/FormLabel.vue";
-import MainHeader from "../components/MainHeader.vue";
+
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
-  name: "ProposeBookForm",
+  name: "BookForm",
   components: {
     FormLabel,
-    MainHeader,
     ButtonBC,
   },
+  emits: ["popUpTrigger", "proposeBookFormTrigger"],
 
   data() {
     return {
@@ -115,6 +111,7 @@ export default {
       synopsis: "",
     };
   },
+
   computed: {
     titleUpperCase() {
       return this.title.toUpperCase();
@@ -126,6 +123,7 @@ export default {
       return !(this.title && this.author && this.link && this.synopsis);
     },
   },
+
   methods: {
     async submitForm() {
       try {
@@ -139,7 +137,8 @@ export default {
           userId: "abc",
         };
         await EventService.proposeBook(bookData);
-        this.$router.push({ name: "home", params: { popUpTrigger: true } });
+        this.$emit("proposeBookFormTrigger");
+        this.$emit("popUpTrigger");
       } catch (error) {
         alert("Sorry, your book couldn't be posted. Try it later!");
       }
@@ -149,9 +148,6 @@ export default {
 </script>
 
 <style scoped>
-main {
-  padding-bottom: 1.6rem;
-}
 .propose-book-container {
   min-height: 75vh;
   padding: 1.4rem;
@@ -186,5 +182,31 @@ main {
 }
 .icon-arrow-right {
   margin-left: 1rem;
+}
+
+@media (min-width: 768px) {
+  .propose-book-container {
+    padding: 1rem 5rem;
+  }
+  .propose-book__title {
+    font-size: 3.6rem;
+    line-height: 4.6rem;
+  }
+
+  .propose-book__description {
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+  }
+
+  .label__input {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    margin-top: 1.6rem;
+  }
+
+  .propose-book__final--note {
+    font-size: 1.3rem;
+    line-height: 1.7rem;
+  }
 }
 </style>
