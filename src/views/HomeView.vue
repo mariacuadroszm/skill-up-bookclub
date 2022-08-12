@@ -69,6 +69,17 @@ export default {
     ModalView,
     BookForm,
   },
+
+  props: {
+    displayBookForm: {
+      type: String,
+      default: "false",
+      validator: (propValue) => {
+        return ["true", "false"].includes(propValue);
+      },
+    },
+  },
+
   data() {
     return {
       displayBackBtn: false,
@@ -91,6 +102,9 @@ export default {
   },
 
   created() {
+    if (this.displayBookForm === "true") {
+      this.displayProposeBookForm = true;
+    }
     EventService.getProposedBooks(5)
       .then((response) => {
         this.proposedBooks = response.data;
