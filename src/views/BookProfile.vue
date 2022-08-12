@@ -10,6 +10,7 @@
         :participants="participants"
         @updateParticipants="updateParticipants"
       ></CompleteBookInfo>
+      <ActiveClubMembers v-if="isReader" :id="id"></ActiveClubMembers>
     </article>
   </main>
 </template>
@@ -18,12 +19,14 @@
 import EventService from "../services/EventService";
 import MainHeader from "../components/MainHeader.vue";
 import CompleteBookInfo from "../components/CompleteBookInfo.vue";
+import ActiveClubMembers from "../components/ActiveClubMembers.vue";
 
 export default {
   name: "BookProfile",
   components: {
     MainHeader,
     CompleteBookInfo,
+    ActiveClubMembers,
   },
   data() {
     return {
@@ -36,35 +39,30 @@ export default {
       type: String,
       required: true,
     },
-    reader: {
-      type: String,
-      required: true,
-    },
   },
   computed: {
     book() {
-      const titleLowerCase = this.bookInfo.title.toLowerCase();
+      const titleLowerCase = this.bookInfo.book.title.toLowerCase();
       const titleCapFirstLetter =
         titleLowerCase.charAt(0).toUpperCase() + titleLowerCase.slice(1);
-      const authorLowerCase = this.bookInfo.author.toLowerCase();
+      const authorLowerCase = this.bookInfo.book.author.toLowerCase();
 
       return {
         id: this.id,
         title: titleCapFirstLetter,
         author: authorLowerCase,
-        synopsis: this.bookInfo.synopsis,
-        storeUrl: this.bookInfo.storeUrl,
+        synopsis: this.bookInfo.book.synopsis,
+        storeUrl: this.bookInfo.book.storeUrl,
       };
     },
     isReader() {
-      if (this.reader === "false") {
+      if (this.bookInfo.status === "Proposed") {
         return false;
       } else {
         return true;
       }
     },
   },
-
   methods: {
     async updateParticipants() {
       try {
@@ -74,7 +72,6 @@ export default {
       }
     },
   },
-
   async created() {
     try {
       this.bookInfo = await EventService.getBookProfile(this.id);
