@@ -6,9 +6,11 @@
       @proposeBookFormTrigger="closePopUp"
     ></MainHeader>
     <div class="pop-up-inner">
-      <ButtonBC class="close__btn" variant="arrow" @click="closePopUp">
-        <v-icon name="oi-arrow-left" scale="2" fill="black" />
-      </ButtonBC>
+      <div class="close-btn-container">
+        <ButtonBC class="close__btn" variant="close" @click="closePopUp">
+          <v-icon name="oi-arrow-left" scale="2" fill="black" />
+        </ButtonBC>
+      </div>
       <slot></slot>
     </div>
   </div>
@@ -39,11 +41,10 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: -10rem;
   left: 0;
   right: 0;
-  bottom: 0;
   z-index: 99;
   background-color: var(--secondary-background-color);
   min-height: 100vh;
@@ -66,6 +67,8 @@ export default {
 @media (min-width: 768px) {
   .pop-up-container {
     background-color: var(--opacity-background-color);
+    position: fixed;
+    top: 0;
   }
   .main-header {
     display: none;
@@ -73,7 +76,11 @@ export default {
   .pop-up-inner {
     padding: 0;
     width: 60rem;
-    height: 70rem;
+  }
+
+  .close-btn-container {
+    display: flex;
+    flex-direction: row-reverse;
   }
 
   .close__btn {

@@ -33,5 +33,6 @@ export default {
 .label__description {
   font-family: var(--secondary-font);
   font-weight: 700;
+  display: flex;
 }
 </style>
