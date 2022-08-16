@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://184.73.114.18:3100",
+  baseURL: "https://zemogabookclub-test.click",
   withCredentials: false,
   headers: {
     Accept: "application/json",
