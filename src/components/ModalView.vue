@@ -2,7 +2,7 @@
   <div class="pop-up-container">
     <MainHeader
       class="main-header"
-      homepage="true"
+      :homepage="true"
       @proposeBookFormTrigger="closePopUp"
     ></MainHeader>
     <div class="pop-up-inner">
