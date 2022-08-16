@@ -146,7 +146,10 @@ export default {
 
 @media (min-width: 1500px) {
   main {
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .container {
     max-width: 151.5rem;
