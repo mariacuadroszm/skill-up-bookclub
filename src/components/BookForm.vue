@@ -92,7 +92,6 @@
 <script>
 import EventService from "../services/EventService";
 import FormLabel from "../components/FormLabel.vue";
-
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
