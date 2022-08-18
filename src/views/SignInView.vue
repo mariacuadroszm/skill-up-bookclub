@@ -1,5 +1,5 @@
 <template>
-  <main class="main-sign-in-container">
+  <main class="sign-in-container">
     <img
       class="main__logo"
       src="../components/icons/media-monks-logo.svg"
@@ -78,7 +78,7 @@
       </FormLabel>
 
       <div class="final-info-container">
-        <ButtonBC class="final-info__button" type="submit" variant="primary">
+        <ButtonBC class="final-info__button" type="submit" variant="login">
           Sign in
         </ButtonBC>
         <p class="text-s font-medium">Already have an account?</p>
@@ -119,8 +119,8 @@ export default {
   width: 16rem;
   margin-bottom: 3.2rem;
 }
-.main-sign-in-container {
-  height: 100vh;
+.sign-in-container {
+  min-height: 100vh;
   padding: 8.2rem 6.3rem;
   display: flex;
   flex-direction: column;
@@ -140,8 +140,25 @@ form {
   align-items: center;
 }
 
+.final-info__button {
+  margin-top: 4rem;
+  margin-bottom: 3.2rem;
+}
+
 .final-info__router {
   color: var(--white);
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sign-in-container {
+    width: 44rem;
+    margin: 0 auto;
+  }
+
+  .main__logo {
+    width: 20rem;
+  }
 
 }
 </style>
