@@ -1,5 +1,5 @@
 <template>
-  <main class="log-in-container">
+  <main class="sign-in-container">
     <img
       class="main__logo"
       src="../components/icons/media-monks-logo.svg"
@@ -7,34 +7,6 @@
     />
 
     <form>
-      <FormLabel id="name" class="label-container">
-        <template v-slot:labelDescription>First name</template>
-        <template v-slot:labelInput>
-          <input
-            type="text"
-            id="name"
-            placeholder="Type your first name"
-            required
-            class="label__input"
-            v-model="name"
-          />
-        </template>
-      </FormLabel>
-
-      <FormLabel id="lastName" class="label-container">
-        <template v-slot:labelDescription>Last name</template>
-        <template v-slot:labelInput>
-          <input
-            type="text"
-            id="lastName"
-            placeholder="Type your last name"
-            required
-            class="label__input"
-            v-model="lastName"
-          />
-        </template>
-      </FormLabel>
-
       <FormLabel id="email" class="label-container">
         <template v-slot:labelDescription>E-mail</template>
         <template v-slot:labelInput>
@@ -63,29 +35,15 @@
         </template>
       </FormLabel>
 
-      <FormLabel id="confirmPassword">
-        <template v-slot:labelDescription>Confirm password</template>
-        <template v-slot:labelInput>
-          <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Type again your password"
-            required
-            class="label__input"
-            v-model="confirmPassword"
-          />
-        </template>
-      </FormLabel>
-
       <div class="final-info-container">
         <ButtonBC class="final-info__button" type="submit" variant="login">
-          Sign in
+          Log in
         </ButtonBC>
-        <p class="text-s font-medium">Already have an account?</p>
+        <p class="text-s font-medium">Don't have an account?</p>
         <router-link
           class="final-info__router text-s font-medium"
-          :to="{ name: 'log-in' }"
-          >Log in here</router-link
+          :to="{ name: 'sign-in' }"
+          >Sign in here</router-link
         >
       </div>
     </form>
@@ -97,7 +55,7 @@ import FormLabel from "../components/FormLabel.vue";
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 
 export default {
-  name: "SignInView",
+  name: "LogInView",
   components: {
     FormLabel,
     ButtonBC,
@@ -119,7 +77,7 @@ export default {
   width: 16rem;
   margin-bottom: 3.2rem;
 }
-.log-in-container {
+.sign-in-container {
   min-height: 100vh;
   padding: 8.2rem 6.3rem;
   display: flex;
@@ -154,7 +112,7 @@ form {
 }
 
 @media (min-width: 768px) {
-  .log-in-container {
+  .sign-in-container {
     width: 44rem;
     margin: 0 auto;
   }

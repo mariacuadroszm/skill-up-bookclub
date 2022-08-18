@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import SignInView from "../views/SignInView.vue";
+import LogInView from "../views/LogInView.vue";
 import ProposedBookListExtended from "../views/ProposedBookListExtended.vue";
 import BookProfile from "../views/BookProfile.vue";
 import ActiveClubsListExtended from "../views/ActiveClubsListExtended.vue";
@@ -40,6 +41,12 @@ const router = createRouter({
       path: "/sign-in",
       name: "sign-in",
       component: SignInView,
+      props: true,
+    },
+    {
+      path: "/log-in",
+      name: "log-in",
+      component: LogInView,
       props: true,
     },
   ],
