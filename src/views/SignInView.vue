@@ -1,12 +1,12 @@
 <template>
-  <main class="log-in-container">
+  <main class="sign-in-container">
     <img
       class="main__logo"
       src="../components/icons/media-monks-logo.svg"
       alt="Media Monks logo"
     />
 
-    <form>
+    <form @submit.prevent="submitSignIn">
       <FormLabel id="name" class="label-container">
         <template v-slot:labelDescription>First name</template>
         <template v-slot:labelInput>
@@ -46,6 +46,11 @@
             class="label__input"
             v-model="email"
           />
+          <div v-if="notZemogaEmail" class="not-zemoga-email form-error">
+            <ul>
+              <li class="text-s">{{ notZemogaEmail }}</li>
+            </ul>
+          </div>
         </template>
       </FormLabel>
 
@@ -60,6 +65,17 @@
             class="label__input"
             v-model="password"
           />
+          <div v-if="!validPassword" class="not-valid-password">
+            <p class="not-valid-password__description text-s">
+              Your password must have:
+            </p>
+            <ul class="not-valid-password__bullets">
+              <li class="text-s">Numbers and letters</li>
+              <li class="text-s">Uppercase and lowercase</li>
+              <li class="text-s">8-16 characters</li>
+              <li class="text-s">No blank spaces</li>
+            </ul>
+          </div>
         </template>
       </FormLabel>
 
@@ -74,6 +90,14 @@
             class="label__input"
             v-model="confirmPassword"
           />
+          <div
+            v-if="passwordsDontMatch"
+            class="passwords-dont-match form-error"
+          >
+            <ul>
+              <li class="text-s">{{ passwordsDontMatch }}</li>
+            </ul>
+          </div>
         </template>
       </FormLabel>
 
@@ -109,7 +133,47 @@ export default {
       email: "",
       password: "",
       confirmPassword: "",
+      notZemogaEmail: "",
+      passwordsDontMatch: "",
+      validPassword: true,
     };
+  },
+
+  methods: {
+    submitSignIn() {
+      if (
+        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemoga.com\s*$/.test(this.email) ||
+        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemogainc.com\s*$/.test(this.email)
+      ) {
+        this.notZemogaEmail = "";
+      } else {
+        this.notZemogaEmail = "Sorry, Zemoga e-mail only!";
+      }
+
+      if (this.password === this.confirmPassword) {
+        this.passwordsDontMatch = "";
+      } else {
+        this.passwordsDontMatch = "Your passwords don't match";
+      }
+
+      if (
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/.test(this.password)
+      ) {
+        this.validPassword = true;
+      } else {
+        this.validPassword = false;
+      }
+
+      if (
+        !this.passwordsDontMatch &&
+        !this.notZemogaEmail &&
+        this.validPassword
+      ) {
+        this.$router.push({
+          name: "home",
+        });
+      }
+    },
   },
 };
 </script>
@@ -119,9 +183,9 @@ export default {
   width: 16rem;
   margin-bottom: 3.2rem;
 }
-.log-in-container {
+.sign-in-container {
   min-height: 100vh;
-  padding: 8.2rem 6.3rem;
+  padding: 4rem 6.3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -135,6 +199,20 @@ form {
 
 .label-container {
   margin-bottom: 2.4rem;
+}
+
+.form-error {
+  margin-top: 1.4rem;
+  padding-left: 1.5rem;
+}
+
+.not-valid-password__description {
+  margin-top: 1.4rem;
+  padding: 0;
+}
+
+.not-valid-password__bullets {
+  padding-left: 2.5rem;
 }
 .final-info-container {
   display: flex;
@@ -154,7 +232,7 @@ form {
 }
 
 @media (min-width: 768px) {
-  .log-in-container {
+  .sign-in-container {
     width: 44rem;
     margin: 0 auto;
   }

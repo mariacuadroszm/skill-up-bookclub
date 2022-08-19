@@ -1,12 +1,12 @@
 <template>
-  <main class="sign-in-container">
+  <main class="log-in-container">
     <img
       class="main__logo"
       src="../components/icons/media-monks-logo.svg"
       alt="Media Monks logo"
     />
 
-    <form>
+    <form @submit.prevent="submitLogIn">
       <FormLabel id="email" class="label-container">
         <template v-slot:labelDescription>E-mail</template>
         <template v-slot:labelInput>
@@ -18,6 +18,11 @@
             class="label__input"
             v-model="email"
           />
+          <div v-if="notZemogaEmail" class="not-zemoga-email form-error">
+            <ul>
+              <li class="text-s">{{ notZemogaEmail }}</li>
+            </ul>
+          </div>
         </template>
       </FormLabel>
 
@@ -62,12 +67,28 @@ export default {
   },
   data() {
     return {
-      name: "",
-      lastName: "",
       email: "",
       password: "",
-      confirmPassword: "",
+      notZemogaEmail: "",
     };
+  },
+  methods: {
+    submitLogIn() {
+      if (
+        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemoga.com\s*$/.test(this.email) ||
+        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemogainc.com\s*$/.test(this.email)
+      ) {
+        this.notZemogaEmail = "";
+      } else {
+        this.notZemogaEmail = "Sorry, Zemoga e-mail only!";
+      }
+
+      if (!this.notZemogaEmail) {
+        this.$router.push({
+          name: "home",
+        });
+      }
+    },
   },
 };
 </script>
@@ -77,7 +98,7 @@ export default {
   width: 16rem;
   margin-bottom: 3.2rem;
 }
-.sign-in-container {
+.log-in-container {
   min-height: 100vh;
   padding: 8.2rem 6.3rem;
   display: flex;
@@ -93,6 +114,11 @@ form {
 
 .label-container {
   margin-bottom: 2.4rem;
+}
+
+.form-error {
+  margin-top: 1.4rem;
+  padding-left: 1.5rem;
 }
 .final-info-container {
   display: flex;
@@ -112,7 +138,7 @@ form {
 }
 
 @media (min-width: 768px) {
-  .sign-in-container {
+  .log-in-container {
     width: 44rem;
     margin: 0 auto;
   }
