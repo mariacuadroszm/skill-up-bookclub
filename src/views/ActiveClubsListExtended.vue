@@ -112,5 +112,15 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
+
+  .proposed-books-info__title {
+    font-size: 3.6rem;
+    line-height: 4.6rem;
+  }
+
+  .proposed-books-info__description {
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+  }
 }
 </style>

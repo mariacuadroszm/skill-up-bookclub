@@ -1,7 +1,7 @@
 <template>
   <div class="label-container">
     <label :for="id">
-      <span class="label__description text-m">
+      <span class="label__description text-l">
         <slot name="labelDescription"></slot>
       </span>
       <div>

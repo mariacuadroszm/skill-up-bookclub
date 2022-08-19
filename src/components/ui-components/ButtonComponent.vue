@@ -8,6 +8,7 @@
       arrow: isAnArrow,
       disabled: isDisabled,
       close: isCloseX,
+      login: isLogin,
     }"
   >
     <slot>Show all</slot>
@@ -29,6 +30,7 @@ export default {
           "arrow",
           "disabled",
           "close",
+          "login",
         ].includes(propValue);
       },
     },
@@ -54,6 +56,9 @@ export default {
     },
     isCloseX() {
       return this.variant === "close";
+    },
+    isLogin() {
+      return this.variant === "login";
     },
   },
 };
@@ -98,6 +103,10 @@ export default {
   opacity: 0.3;
 }
 
+.login {
+  background: var(--accent-color);
+}
+
 @media (min-width: 768px) {
   .btn {
     padding-left: 10.5rem;
@@ -113,6 +122,10 @@ export default {
     box-shadow: none;
     padding: 0;
     margin: 0;
+  }
+
+  .login {
+    padding-inline: 2.4rem;
   }
 }
 </style>
