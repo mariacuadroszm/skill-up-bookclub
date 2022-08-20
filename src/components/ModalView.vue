@@ -36,7 +36,7 @@ export default {
 
 <style scoped>
 .pop-up-container {
-  padding: 1.6rem;
+  padding: 0 1.6rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,6 +66,7 @@ export default {
 
 @media (min-width: 768px) {
   .pop-up-container {
+    padding: 0;
     background-color: var(--opacity-background-color);
     top: -16.2rem;
     bottom: 0;

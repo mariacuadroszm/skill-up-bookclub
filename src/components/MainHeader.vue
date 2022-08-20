@@ -25,7 +25,7 @@ export default {
   components: {
     ButtonBC,
   },
-  emits: ["proposeBookFormTrigger"],
+  emits: ["proposeBookFormTrigger", "bookDetailsTrigger"],
   data() {
     return {};
   },
@@ -45,6 +45,7 @@ export default {
         this.$router.go(-1);
       } else {
         this.$emit("proposeBookFormTrigger");
+        this.$emit("bookDetailsTrigger");
       }
     },
   },

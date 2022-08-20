@@ -1,5 +1,9 @@
 <template>
-  <div class="book-card px-5 py-5" @click.stop="showBookProfile()">
+  <div
+    class="book-card px-5 py-5"
+    @click.stop="showBookProfile()"
+    :class="this.$attrs.class"
+  >
     <div class="book-card__info">
       <p
         data-testid="title"
@@ -49,23 +53,38 @@
       </div>
     </div>
   </div>
+
+  <Teleport to="body">
+    <BookDetails
+      v-if="displayBookProfile"
+      :id="this.book.id"
+      :bookInfo="bookInfo"
+      :displayBookProfile="displayBookProfile"
+    ></BookDetails>
+  </Teleport>
 </template>
 
 <script>
 import ButtonBC from "./ui-components/ButtonComponent.vue";
 import EventService from "../services/EventService";
+import BookDetails from "./BookDetails.vue";
 
 export default {
   name: "BookCard",
+  inheritAttrs: false,
   components: {
     "button-bc": ButtonBC,
+    BookDetails,
   },
+  emits: ["bookDetailsTrigger"],
   data() {
     return {
       userVoted: false,
       title: this.book.book.title,
       author: this.book.book.author,
       participants: this.book.userCount,
+      displayBookProfile: false,
+      bookInfo: {},
     };
   },
   props: {
@@ -106,6 +125,16 @@ export default {
         .join(" ");
       return authorCapitalize;
     },
+    // blockBg() {
+    //   const app = this.$el.parentElement.closest("#app");
+    //   if (this.displayBookProfile === false) {
+    //     app.classList.add("block-bg");
+    //     return this.displayBookProfile === true;
+    //   } else {
+    //     app.classList.remove("block-bg");
+    //     return this.displayBookProfile === false;
+    //   }
+    // },
   },
   methods: {
     async addVote() {
@@ -124,18 +153,30 @@ export default {
       }
     },
     showBookProfile() {
-      if (this.isReader) {
-        return this.$router.push({
-          name: "ActiveBookProfile",
-          params: { id: this.book.id },
-        });
-      } else {
-        return this.$router.push({
-          name: "ProposedBookProfile",
-          params: { id: this.book.id },
-        });
-      }
+      // const app = this.$el.parentElement.closest("#app");
+      // if (this.displayBookProfile === false) {
+      //   app.classList.add("block-bg");
+      //   return (this.displayBookProfile = !this.displayBookProfile);
+      // } else {
+      //   app.classList.remove("block-bg");
+      //   return (this.displayBookProfile = !this.displayBookProfile);
+      // }
+      // console.log(this.$el.parentElement.closest("#app"));
+      // const app = this.$el.parentElement.closest("#app");
+      // app.classList.add("block-bg");
+      this.displayBookProfile = !this.displayBookProfile;
     },
+  },
+  async created() {
+    try {
+      this.bookInfo = await EventService.getBookProfile(this.book.id);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  beforeUpdate() {
+    // const app = this.$el.parentElement.closest("#app");
+    // app.classList.add("block-bg");
   },
 };
 </script>

@@ -95,6 +95,7 @@ export default {
   font-family: var(--secondary-font);
   color: var(--accent-color);
   cursor: pointer;
+  text-decoration: underline;
 }
 
 @media (min-width: 768px) {
