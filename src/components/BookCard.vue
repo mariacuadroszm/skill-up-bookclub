@@ -1,7 +1,7 @@
 <template>
   <div
     class="book-card px-5 py-5"
-    @click.stop="showBookProfile()"
+    @click.stop="showBookDetails"
     :class="this.$attrs.class"
   >
     <div class="book-card__info">
@@ -56,10 +56,10 @@
 
   <Teleport to="body">
     <BookDetails
-      v-if="displayBookProfile"
+      v-if="displayBookDetails"
       :id="this.book.id"
       :bookInfo="bookInfo"
-      :displayBookProfile="displayBookProfile"
+      @closeBookDetails="displayBookDetails = false"
     ></BookDetails>
   </Teleport>
 </template>
@@ -76,14 +76,13 @@ export default {
     "button-bc": ButtonBC,
     BookDetails,
   },
-  emits: ["bookDetailsTrigger"],
   data() {
     return {
       userVoted: false,
       title: this.book.book.title,
       author: this.book.book.author,
       participants: this.book.userCount,
-      displayBookProfile: false,
+      displayBookDetails: false,
       bookInfo: {},
     };
   },
@@ -125,16 +124,6 @@ export default {
         .join(" ");
       return authorCapitalize;
     },
-    // blockBg() {
-    //   const app = this.$el.parentElement.closest("#app");
-    //   if (this.displayBookProfile === false) {
-    //     app.classList.add("block-bg");
-    //     return this.displayBookProfile === true;
-    //   } else {
-    //     app.classList.remove("block-bg");
-    //     return this.displayBookProfile === false;
-    //   }
-    // },
   },
   methods: {
     async addVote() {
@@ -152,19 +141,20 @@ export default {
         console.error(error);
       }
     },
-    showBookProfile() {
-      // const app = this.$el.parentElement.closest("#app");
-      // if (this.displayBookProfile === false) {
-      //   app.classList.add("block-bg");
-      //   return (this.displayBookProfile = !this.displayBookProfile);
+    showBookDetails() {
+      this.displayBookDetails = true;
+      // const header =
+      //   this.$el.parentElement.parentElement.parentElement.firstElementChild;
+      // const body = this.$el.parentElement.closest("#app > div");
+      // console.log(header);
+      // console.log(body);
+      // if (this.displayBookDetails === true) {
+      //   header.classList.add("block-header");
+      //   body.classList.add("block-bg");
       // } else {
-      //   app.classList.remove("block-bg");
-      //   return (this.displayBookProfile = !this.displayBookProfile);
+      //   header.classList.remove("block-header");
+      //   body.classList.remove("block-bg");
       // }
-      // console.log(this.$el.parentElement.closest("#app"));
-      // const app = this.$el.parentElement.closest("#app");
-      // app.classList.add("block-bg");
-      this.displayBookProfile = !this.displayBookProfile;
     },
   },
   async created() {
@@ -173,10 +163,6 @@ export default {
     } catch (error) {
       console.error(error);
     }
-  },
-  beforeUpdate() {
-    // const app = this.$el.parentElement.closest("#app");
-    // app.classList.add("block-bg");
   },
 };
 </script>
@@ -231,6 +217,13 @@ export default {
   color: var(--white);
 }
 
+.block-header {
+  position: static;
+}
+
+.block-bg {
+  position: fixed;
+}
 @media (min-width: 768px) {
   .book-card {
     padding: 2.4rem;
@@ -239,6 +232,10 @@ export default {
   .vote-btn {
     width: 10.8rem;
     padding-inline: 1.8rem;
+  }
+
+  .block-bg {
+    position: initial;
   }
 }
 </style>

@@ -218,4 +218,31 @@ export default {
   font-family: var(--secondary-font);
   text-align: center;
 }
+
+@media (min-width: 768px) {
+  .book-profile__title,
+  .book-profile__author {
+    padding-inline: 7rem;
+  }
+  .book-profile__author {
+    margin-bottom: 2rem;
+  }
+
+  .book-synopsis--margin-interested {
+    margin-bottom: 2.4rem;
+  }
+
+  .book-synopsis__title,
+  .book-synopsis__info {
+    text-align: left;
+  }
+
+  .vote-btn {
+    padding-inline: 2.4rem;
+  }
+
+  .book-profile__info {
+    padding-inline: 10rem;
+  }
+}
 </style>

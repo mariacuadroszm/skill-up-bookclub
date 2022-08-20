@@ -3,7 +3,7 @@
     <MainHeader
       class="main-header"
       :homepage="true"
-      @bookDetailsTrigger="closePopUp"
+      @click="closePopUp"
     ></MainHeader>
     <article class="pop-up-inner">
       <div class="close-btn-container">
@@ -39,11 +39,10 @@ export default {
     CompleteBookInfo,
     ActiveClubMembers,
   },
-  emits: ["bookDetailsTrigger"],
+  emits: ["closeBookDetails"],
   data() {
     return {
       participants: 0,
-      togglePopUp: this.displayBookProfile,
     };
   },
   props: {
@@ -53,10 +52,6 @@ export default {
     },
     bookInfo: {
       type: Object,
-      required: true,
-    },
-    displayBookProfile: {
-      type: Boolean,
       required: true,
     },
   },
@@ -92,11 +87,10 @@ export default {
       }
     },
     closePopUp() {
-      this.$emit("bookDetailsTrigger");
+      this.$emit("closeBookDetails");
     },
   },
   async created() {
-    console.log(this.togglePopUp);
     try {
       this.participants = await EventService.getParticipantsCount(this.id);
     } catch (error) {
@@ -143,14 +137,6 @@ export default {
   max-width: 60rem;
   min-height: 64.5rem;
   padding: 3rem;
-}
-
-.close-pop-up {
-  display: none;
-}
-
-.block-bg {
-  overflow: hidden;
 }
 
 @media (min-width: 768px) {
