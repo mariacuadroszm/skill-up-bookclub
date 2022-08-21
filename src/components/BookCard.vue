@@ -59,7 +59,7 @@
       v-if="displayBookDetails"
       :id="this.book.id"
       :bookInfo="bookInfo"
-      @closeBookDetails="displayBookDetails = false"
+      @closeBookDetails="hideBookDetails"
     ></BookDetails>
   </Teleport>
 </template>
@@ -76,6 +76,7 @@ export default {
     "button-bc": ButtonBC,
     BookDetails,
   },
+  emits: ["blockBg", "unblockBg"],
   data() {
     return {
       userVoted: false,
@@ -143,18 +144,11 @@ export default {
     },
     showBookDetails() {
       this.displayBookDetails = true;
-      // const header =
-      //   this.$el.parentElement.parentElement.parentElement.firstElementChild;
-      // const body = this.$el.parentElement.closest("#app > div");
-      // console.log(header);
-      // console.log(body);
-      // if (this.displayBookDetails === true) {
-      //   header.classList.add("block-header");
-      //   body.classList.add("block-bg");
-      // } else {
-      //   header.classList.remove("block-header");
-      //   body.classList.remove("block-bg");
-      // }
+      this.$emit("blockBg", { displayBookDetails: true });
+    },
+    hideBookDetails({ displayBookDetails }) {
+      this.displayBookDetails = displayBookDetails;
+      this.$emit("unblockBg", { displayBookDetails: false });
     },
   },
   async created() {
@@ -217,13 +211,6 @@ export default {
   color: var(--white);
 }
 
-.block-header {
-  position: static;
-}
-
-.block-bg {
-  position: fixed;
-}
 @media (min-width: 768px) {
   .book-card {
     padding: 2.4rem;
@@ -232,10 +219,6 @@ export default {
   .vote-btn {
     width: 10.8rem;
     padding-inline: 1.8rem;
-  }
-
-  .block-bg {
-    position: initial;
   }
 }
 </style>

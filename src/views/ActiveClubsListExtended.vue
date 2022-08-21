@@ -1,12 +1,18 @@
 <template>
-  <div class="proposed-books-info-container px-5">
+  <div
+    class="proposed-books-info-container px-5"
+    :class="[displayBookDetails ? 'block-header' : '']"
+  >
     <MainHeader></MainHeader>
     <h2 class="proposed-books-info__title">All active clubs</h2>
     <span class="proposed-books-info__description text-m"
       >List with current active book clubs
     </span>
   </div>
-  <div class="active-clubs-container">
+  <div
+    class="active-clubs-container"
+    :class="[displayBookDetails ? 'block-bg' : '']"
+  >
     <div class="proposed-books-list px-5">
       <BookCard
         v-for="(book, id) in booksInfoSorted"
@@ -14,6 +20,8 @@
         :book="book"
         class="extended"
         :isReader="true"
+        @blockBg="toggleBackground"
+        @unblockBg="toggleBackground"
       ></BookCard>
     </div>
     <span class="thatsAll text-m">That's all we got (-:</span>
@@ -34,6 +42,7 @@ export default {
   data() {
     return {
       booksInfo: [],
+      displayBookDetails: false,
     };
   },
   created() {
@@ -51,6 +60,11 @@ export default {
       return booksCopy.sort(function (a, b) {
         return b.participants - a.participants;
       });
+    },
+  },
+  methods: {
+    toggleBackground({ displayBookDetails }) {
+      this.displayBookDetails = displayBookDetails;
     },
   },
 };
@@ -83,6 +97,14 @@ export default {
 .thatsAll {
   color: var(--white);
   display: none;
+}
+
+.block-header {
+  position: static;
+}
+
+.block-bg {
+  position: fixed;
 }
 
 @media (min-width: 768px) {
@@ -121,6 +143,10 @@ export default {
   .proposed-books-info__description {
     font-size: 1.8rem;
     line-height: 2.1rem;
+  }
+
+  .block-bg {
+    position: initial;
   }
 }
 </style>

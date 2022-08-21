@@ -87,7 +87,7 @@ export default {
       }
     },
     closePopUp() {
-      this.$emit("closeBookDetails");
+      this.$emit("closeBookDetails", { displayBookDetails: false });
     },
   },
   async created() {
