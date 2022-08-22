@@ -47,7 +47,6 @@ export default {
       console.error(error);
     }
   },
-
   joinClub(userId, clubId) {
     return apiClient.patch(
       `/users/user/club/join?id=${userId}&clubId=${clubId}`
@@ -57,5 +56,11 @@ export default {
     return apiClient.patch(
       `/users/user/club/unjoin?id=${userId}&clubId=${clubId}`
     );
+  },
+  signUpUser(userInfo) {
+    return apiClient.post("/users/user/signup", userInfo);
+  },
+  logInUser(userInfo) {
+    return apiClient.post("/users/user/login", userInfo);
   },
 };
