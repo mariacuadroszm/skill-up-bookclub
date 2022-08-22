@@ -52,8 +52,8 @@
         <p class="text-s font-medium">Don't have an account?</p>
         <router-link
           class="final-info__router text-s font-medium"
-          :to="{ name: 'sign-in' }"
-          >Sign in here</router-link
+          :to="{ name: 'sign-up' }"
+          >Sign up here</router-link
         >
       </div>
     </form>

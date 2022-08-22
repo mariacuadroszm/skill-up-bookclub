@@ -103,7 +103,7 @@
 
       <div class="final-info-container">
         <ButtonBC class="final-info__button" type="submit" variant="login">
-          Sign in
+          Sign up
         </ButtonBC>
         <p class="text-s font-medium">Already have an account?</p>
         <router-link
@@ -122,7 +122,7 @@ import ButtonBC from "../components/ui-components/ButtonComponent.vue";
 import EventService from "../services/EventService.js";
 
 export default {
-  name: "SignInView",
+  name: "SignUpView",
   components: {
     FormLabel,
     ButtonBC,

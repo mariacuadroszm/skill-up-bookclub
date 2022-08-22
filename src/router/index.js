@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import SignInView from "../views/SignInView.vue";
+import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
 import ProposedBookListExtended from "../views/ProposedBookListExtended.vue";
 import ActiveClubsListExtended from "../views/ActiveClubsListExtended.vue";
@@ -25,9 +25,9 @@ const router = createRouter({
       component: ActiveClubsListExtended,
     },
     {
-      path: "/sign-in",
-      name: "sign-in",
-      component: SignInView,
+      path: "/sign-up",
+      name: "sign-up",
+      component: SignUpView,
       props: true,
     },
     {
