@@ -20,8 +20,8 @@
         :book="book"
         class="extended"
         :isReader="true"
-        @blockBg="toggleBackground"
-        @unblockBg="toggleBackground"
+        @blockBg="setBackground"
+        @unblockBg="setBackground"
       ></BookCard>
     </div>
     <span class="thatsAll text-m">That's all we got (-:</span>
@@ -63,8 +63,8 @@ export default {
     },
   },
   methods: {
-    toggleBackground({ displayBookDetails }) {
-      this.displayBookDetails = displayBookDetails;
+    setBackground() {
+      this.displayBookDetails = !this.displayBookDetails;
     },
   },
 };

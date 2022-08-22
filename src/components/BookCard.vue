@@ -144,11 +144,11 @@ export default {
     },
     showBookDetails() {
       this.displayBookDetails = true;
-      this.$emit("blockBg", { displayBookDetails: true });
+      this.$emit("blockBg");
     },
-    hideBookDetails({ displayBookDetails }) {
-      this.displayBookDetails = displayBookDetails;
-      this.$emit("unblockBg", { displayBookDetails: false });
+    hideBookDetails() {
+      this.displayBookDetails = false;
+      this.$emit("unblockBg");
     },
   },
   async created() {
