@@ -1,5 +1,8 @@
 <template>
-  <div class="proposed-books-info-container px-5">
+  <div
+    class="proposed-books-info-container px-5"
+    :class="[displayBookDetails ? 'block-header' : '']"
+  >
     <MainHeader></MainHeader>
     <div class="proposed-books">
       <div class="proposed-books-info">
@@ -22,7 +25,10 @@
     </div>
   </div>
 
-  <div class="proposed-books-container">
+  <div
+    class="proposed-books-container"
+    :class="[displayBookDetails ? 'block-bg' : '']"
+  >
     <div class="proposed-books-list px-5">
       <BookCard
         v-for="(book, id) in booksInfoSorted"
@@ -30,6 +36,8 @@
         :book="book"
         class="extended bookCardExtended"
         :isReader="false"
+        @blockBg="setBackground"
+        @unblockBg="setBackground"
       ></BookCard>
     </div>
     <span class="thatsAll text-m">That's all we got (-:</span>
@@ -52,6 +60,7 @@ export default {
   data() {
     return {
       booksInfo: [],
+      displayBookDetails: false,
     };
   },
   created() {
@@ -77,6 +86,9 @@ export default {
         name: "home",
         params: { displayBookForm: true },
       });
+    },
+    setBackground() {
+      this.displayBookDetails = !this.displayBookDetails;
     },
   },
 };
@@ -111,6 +123,14 @@ export default {
 .propose-btn,
 .thatsAll {
   display: none;
+}
+
+.block-header {
+  position: static;
+}
+
+.block-bg {
+  position: fixed;
 }
 
 @media (min-width: 768px) {
@@ -153,6 +173,10 @@ export default {
   .proposed-books-info__description {
     font-size: 1.8rem;
     line-height: 2.1rem;
+  }
+
+  .block-bg {
+    position: initial;
   }
 }
 </style>
