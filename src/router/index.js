@@ -3,7 +3,6 @@ import HomeView from "../views/HomeView.vue";
 import SignInView from "../views/SignInView.vue";
 import LogInView from "../views/LogInView.vue";
 import ProposedBookListExtended from "../views/ProposedBookListExtended.vue";
-import BookProfile from "../views/BookProfile.vue";
 import ActiveClubsListExtended from "../views/ActiveClubsListExtended.vue";
 
 const router = createRouter({
@@ -24,18 +23,6 @@ const router = createRouter({
       path: "/active-clubs-list",
       name: "ActiveClubsListExtended",
       component: ActiveClubsListExtended,
-    },
-    {
-      path: "/book/proposed/:id",
-      name: "ProposedBookProfile",
-      component: BookProfile,
-      props: true,
-    },
-    {
-      path: "/book/active/:id",
-      name: "ActiveBookProfile",
-      component: BookProfile,
-      props: true,
     },
     {
       path: "/sign-in",

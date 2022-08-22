@@ -1,5 +1,9 @@
 <template>
-  <div class="book-card px-5 py-5" @click.stop="showBookProfile()">
+  <div
+    class="book-card px-5 py-5"
+    @click.stop="showBookDetails"
+    :class="this.$attrs.class"
+  >
     <div class="book-card__info">
       <p
         data-testid="title"
@@ -49,23 +53,38 @@
       </div>
     </div>
   </div>
+
+  <Teleport to="body">
+    <BookDetails
+      v-if="displayBookDetails"
+      :id="this.book.id"
+      :bookInfo="bookInfo"
+      @closeBookDetails="hideBookDetails"
+    ></BookDetails>
+  </Teleport>
 </template>
 
 <script>
 import ButtonBC from "./ui-components/ButtonComponent.vue";
 import EventService from "../services/EventService";
+import BookDetails from "./BookDetails.vue";
 
 export default {
   name: "BookCard",
+  inheritAttrs: false,
   components: {
     "button-bc": ButtonBC,
+    BookDetails,
   },
+  emits: ["blockBg", "unblockBg"],
   data() {
     return {
       userVoted: false,
       title: this.book.book.title,
       author: this.book.book.author,
       participants: this.book.userCount,
+      displayBookDetails: false,
+      bookInfo: {},
     };
   },
   props: {
@@ -123,19 +142,21 @@ export default {
         console.error(error);
       }
     },
-    showBookProfile() {
-      if (this.isReader) {
-        return this.$router.push({
-          name: "ActiveBookProfile",
-          params: { id: this.book.id },
-        });
-      } else {
-        return this.$router.push({
-          name: "ProposedBookProfile",
-          params: { id: this.book.id },
-        });
-      }
+    showBookDetails() {
+      this.displayBookDetails = true;
+      this.$emit("blockBg");
     },
+    hideBookDetails() {
+      this.displayBookDetails = false;
+      this.$emit("unblockBg");
+    },
+  },
+  async created() {
+    try {
+      this.bookInfo = await EventService.getBookProfile(this.book.id);
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 </script>
