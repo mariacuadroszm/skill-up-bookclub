@@ -122,7 +122,11 @@ export default {
     async addVote() {
       try {
         if (!this.userVoted) {
-          await EventService.joinClub("Mar123", this.book.id);
+          await EventService.joinClub(
+            "Mar123",
+            this.book.id,
+            this.participants
+          );
           this.userVoted = true;
         } else if (this.userVoted) {
           await EventService.leaveClub("Mar123", this.book.id);

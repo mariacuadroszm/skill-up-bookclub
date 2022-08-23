@@ -22,31 +22,20 @@
 </template>
 
 <script>
-import EventService from "../services/EventService.js";
-
 export default {
   name: "ActiveClubMembers",
   data() {
     return {
-      members: [],
       viewFullList: false,
     };
   },
   props: {
-    id: {
-      type: String,
+    members: {
+      type: Array,
       required: true,
     },
   },
-  created() {
-    EventService.getMembersList(this.id)
-      .then((response) => {
-        this.members = response;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
+
   methods: {
     fullList() {
       this.viewFullList = !this.viewFullList;

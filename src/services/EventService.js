@@ -47,9 +47,9 @@ export default {
       console.error(error);
     }
   },
-  joinClub(userId, clubId) {
+  joinClub(userId, clubId, members) {
     return apiClient.patch(
-      `/users/user/club/join?id=${userId}&clubId=${clubId}`
+      `/users/user/club/join?userId=${userId}&clubId=${clubId}&members=${members}`
     );
   },
   leaveClub(userId, clubId) {
@@ -63,4 +63,10 @@ export default {
   logInUser(userInfo) {
     return apiClient.post("/users/user/login", userInfo);
   },
+
+  checkUserSesion() {
+    return apiClient.get("/users/user/checkSession");
+  },
+
+  //, { withCredentials: true }
 };
