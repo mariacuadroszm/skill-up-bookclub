@@ -51,6 +51,11 @@
               <li class="text-s">{{ notZemogaEmail }}</li>
             </ul>
           </div>
+          <div v-if="emailInUse" class="email-in-use form-error">
+            <ul>
+              <li class="text-s">{{ emailInUse }}</li>
+            </ul>
+          </div>
         </template>
       </FormLabel>
 
@@ -137,6 +142,7 @@ export default {
       notZemogaEmail: "",
       passwordsDontMatch: "",
       validPassword: true,
+      emailInUse: "",
     };
   },
 
@@ -193,7 +199,11 @@ export default {
           });
         }
       } catch (error) {
-        console.error(error);
+        if (error.response.status === 400) {
+          this.emailInUse = "Email already in use";
+        } else {
+          console.error(error);
+        }
       }
     },
   },
