@@ -78,6 +78,7 @@ export default {
     return {
       userVoted: false,
       bookUrl: this.book.storeUrl,
+      userId: "",
     };
   },
   props: {
@@ -118,18 +119,28 @@ export default {
       }
     },
   },
+
+  async created() {
+    try {
+      const userSesion = await EventService.checkUserSesion();
+      this.userId = userSesion.id;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   methods: {
     async addVote() {
       try {
-        if (!this.userVoted) {
+        if (!this.userVoted && this.userId) {
           await EventService.joinClub(
-            "Mar123",
+            this.userId,
             this.book.id,
             this.participants
           );
           this.userVoted = true;
-        } else if (this.userVoted) {
-          await EventService.leaveClub("Mar123", this.book.id);
+        } else if (this.userVoted && this.userId) {
+          await EventService.leaveClub(this.userId, this.book.id);
           this.userVoted = false;
         }
         this.$emit("updateParticipants");
