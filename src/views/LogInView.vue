@@ -101,8 +101,6 @@ export default {
             password: this.password,
           };
           await EventService.logInUser(userInfo);
-          // const userSesion = await EventService.checkUserSesion();
-          // console.log(userSesion);
           this.$router.push({
             name: "home",
           });
