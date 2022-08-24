@@ -2,11 +2,11 @@ import axios from "axios";
 
 const apiClient = axios.create({
   baseURL: "https://zemogabookclub-test.click",
-  withCredentials: false,
+  withCredentials: true,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    "Access-Control-Allow-Methods": "GET, POST,PATCH",
+    "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE",
   },
   mode: "no-cors",
 });
@@ -64,9 +64,12 @@ export default {
     return apiClient.post("/users/user/login", userInfo);
   },
 
-  checkUserSesion() {
-    return apiClient.get("/users/user/checkSession");
+  async checkUserSesion() {
+    try {
+      const response = await apiClient.get("/users/user/checkSession");
+      return response.data.currentUser;
+    } catch (error) {
+      console.error(error);
+    }
   },
-
-  //, { withCredentials: true }
 };

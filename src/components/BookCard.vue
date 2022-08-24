@@ -85,6 +85,7 @@ export default {
       participants: this.book.userCount,
       displayBookDetails: false,
       bookInfo: {},
+      userId: "",
     };
   },
   props: {
@@ -129,16 +130,16 @@ export default {
   methods: {
     async addVote() {
       try {
-        if (!this.userVoted) {
+        if (!this.userVoted && this.userId) {
           await EventService.joinClub(
-            "Mar123",
+            this.userId,
             this.book.id,
             this.participants
           );
           this.participants = this.participants + 1;
           this.userVoted = true;
-        } else {
-          await EventService.leaveClub("Mar123", this.book.id);
+        } else if (this.userVoted && this.userId) {
+          await EventService.leaveClub(this.userId, this.book.id);
           this.participants = this.participants - 1;
           this.userVoted = false;
         }
@@ -158,6 +159,8 @@ export default {
   async created() {
     try {
       this.bookInfo = await EventService.getBookProfile(this.book.id);
+      const userSesion = await EventService.checkUserSesion();
+      this.userId = userSesion.id;
     } catch (error) {
       console.error(error);
     }
