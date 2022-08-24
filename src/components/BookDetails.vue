@@ -3,7 +3,7 @@
     <MainHeader
       class="main-header"
       :homepage="true"
-      @click="closePopUp"
+      @closeBookDetails="closePopUp"
     ></MainHeader>
     <article class="pop-up-inner">
       <div class="close-btn-container">

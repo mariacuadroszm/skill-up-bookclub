@@ -11,6 +11,7 @@ import {
   BiBook,
   HiSolidPlus,
   BiXLg,
+  MdLogoutRound,
 } from "oh-vue-icons/icons";
 
 addIcons(
@@ -20,7 +21,8 @@ addIcons(
   HiSolidCheck,
   IoSearch,
   BiBook,
-  BiXLg
+  BiXLg,
+  MdLogoutRound
 );
 
 const app = createApp(App);

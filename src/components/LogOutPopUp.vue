@@ -1,10 +1,21 @@
 <template>
   <div class="pop-up-container">
-    <div class="pop-up-inner mx-11 px-12 py-8">
+    <div class="pop-up-inner mx-11 py-8 px-5">
       <slot name="text" class="pop-up-inner__text"></slot>
-      <ButtonBC class="pop-up__btn" variant="primary" @click="closePopUp"
-        >Got it!</ButtonBC
+      <ButtonBC
+        class="close__btn font-semibold"
+        variant="secondary"
+        @click="closePopUp"
       >
+        Cancel
+      </ButtonBC>
+      <ButtonBC
+        class="pop-up__btn font-semibold"
+        variant="primary"
+        @click="closePopUp"
+      >
+        Log Out
+      </ButtonBC>
     </div>
   </div>
 </template>
@@ -13,13 +24,20 @@
 import ButtonBC from "./ui-components/ButtonComponent.vue";
 
 export default {
-  name: "PopUp",
+  name: "LogOutPopUp",
+  emits: ["closePopUp"],
+  data() {
+    return {
+      test: false,
+    };
+  },
   components: {
     ButtonBC,
   },
   methods: {
     closePopUp() {
-      this.$emit("popUpTrigger");
+      console.log("The pop-up should no longer appear");
+      this.$emit("closePopUp");
     },
   },
 };
@@ -44,17 +62,22 @@ export default {
   text-align: center;
   width: 32rem;
 }
+
+.close__btn {
+  margin-right: 0.8rem;
+}
 .pop-up__btn {
-  margin-top: 3rem;
+  margin-top: 2.3rem;
 }
 
 @media (min-width: 768px) {
   .pop-up-inner {
-    width: 36rem;
-    padding: 4.4rem 6.3rem;
+    width: 34.8rem;
+    padding-block: 4.4rem;
   }
 
-  .pop-up__btn {
+  .pop-up__btn,
+  .close__btn {
     padding: 0.8rem 2.4rem;
   }
 }

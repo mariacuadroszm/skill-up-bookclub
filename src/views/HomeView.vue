@@ -33,10 +33,12 @@
     </section>
 
     <PopUp v-if="displayPopUp" @popUpTrigger="popUpTrigger">
-      <p class="pop-up-text text-s font-bold">
-        Your book has been proposed (-:
-      </p>
-      <p class="pop-up-text text-s font-bold">Find it on “Proposed books”</p>
+      <template v-slot:text>
+        <p class="pop-up-text text-s font-semibold">
+          Your book has been proposed (-: <br />
+          Find it on “Proposed books”
+        </p>
+      </template>
     </PopUp>
 
     <ModalView
