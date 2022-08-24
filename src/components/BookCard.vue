@@ -82,7 +82,7 @@ export default {
       userVoted: false,
       title: this.book.book.title,
       author: this.book.book.author,
-      participants: 0,
+      participants: this.book.userCount,
       displayBookDetails: false,
       bookInfo: {},
       userId: "",

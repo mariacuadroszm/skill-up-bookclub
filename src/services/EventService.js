@@ -14,7 +14,7 @@ const apiClient = axios.create({
 export default {
   async getBookProfile(id) {
     try {
-      const response = await apiClient.get(`clubs/club?id=${id}`);
+      const response = await apiClient.get(`/clubs/${id}`);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -23,7 +23,7 @@ export default {
 
   async getParticipantsCount(id) {
     try {
-      const response = await apiClient.get(`/clubs/club/users?id=${id}`);
+      const response = await apiClient.get(`/clubs/${id}/users`);
       return response.data.count;
     } catch (error) {
       console.error(error);
@@ -41,7 +41,7 @@ export default {
   },
   async getMembersList(id) {
     try {
-      const response = await apiClient.get(`/clubs/club/users?id=${id}`);
+      const response = await apiClient.get(`/clubs/${id}/users`);
       return response.data.usersInClub;
     } catch (error) {
       console.error(error);
@@ -49,13 +49,11 @@ export default {
   },
   joinClub(userId, clubId, members) {
     return apiClient.patch(
-      `/users/user/club/join?userId=${userId}&clubId=${clubId}&members=${members}`
+      `/users/${userId}/clubs/${clubId}/join?members=${members}`
     );
   },
   leaveClub(userId, clubId) {
-    return apiClient.patch(
-      `/users/user/club/unjoin?id=${userId}&clubId=${clubId}`
-    );
+    return apiClient.patch(`/users/${userId}/clubs/${clubId}/unjoin?`);
   },
   signUpUser(userInfo) {
     return apiClient.post("/users/user/signup", userInfo);
