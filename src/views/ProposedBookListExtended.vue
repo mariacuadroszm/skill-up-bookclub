@@ -31,7 +31,7 @@
   >
     <div class="proposed-books-list px-5">
       <BookCard
-        v-for="(book, id) in booksInfoSorted"
+        v-for="(book, id) in booksInfo"
         :key="id"
         :book="book"
         class="extended bookCardExtended"
@@ -72,14 +72,7 @@ export default {
         console.log(error);
       });
   },
-  computed: {
-    booksInfoSorted() {
-      const booksCopy = [...this.booksInfo];
-      return booksCopy.sort(function (a, b) {
-        return b.participants - a.participants;
-      });
-    },
-  },
+
   methods: {
     proposeBook() {
       this.$router.push({

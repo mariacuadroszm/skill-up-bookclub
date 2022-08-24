@@ -82,7 +82,7 @@ export default {
       userVoted: false,
       title: this.book.book.title,
       author: this.book.book.author,
-      participants: this.book.userCount,
+      participants: 0,
       displayBookDetails: false,
       bookInfo: {},
       userId: "",
@@ -151,14 +151,22 @@ export default {
       this.displayBookDetails = true;
       this.$emit("blockBg");
     },
-    hideBookDetails() {
-      this.displayBookDetails = false;
-      this.$emit("unblockBg");
+    async hideBookDetails() {
+      try {
+        this.displayBookDetails = false;
+        this.participants = await EventService.getParticipantsCount(
+          this.book.id
+        );
+        this.$emit("unblockBg");
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   async created() {
     try {
       this.bookInfo = await EventService.getBookProfile(this.book.id);
+      this.participants = await EventService.getParticipantsCount(this.book.id);
       const userSesion = await EventService.checkUserSesion();
       this.userId = userSesion.id;
     } catch (error) {
