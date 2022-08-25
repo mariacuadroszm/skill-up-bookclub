@@ -16,6 +16,7 @@
           :book="book"
           :isReader="isReader"
           :participants="participants"
+          :isUserInClub="isUserInClub"
           @updateParticipants="updateParticipants"
         ></CompleteBookInfo>
         <ActiveClubMembers
@@ -47,6 +48,7 @@ export default {
     return {
       participants: 0,
       members: [],
+      isUserInClub: "",
     };
   },
   props: {
@@ -87,6 +89,7 @@ export default {
       try {
         this.participants = await EventService.getParticipantsCount(this.id);
         this.members = await EventService.getMembersList(this.id);
+        this.isUserInClub = await EventService.isUserInClub(this.id);
       } catch (error) {
         console.error(error);
       }
@@ -99,6 +102,7 @@ export default {
     try {
       this.participants = await EventService.getParticipantsCount(this.id);
       this.members = await EventService.getMembersList(this.id);
+      this.isUserInClub = await EventService.isUserInClub(this.id);
     } catch (error) {
       console.error(error);
     }

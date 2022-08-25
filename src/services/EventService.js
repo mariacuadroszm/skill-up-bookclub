@@ -70,4 +70,12 @@ export default {
       console.error(error);
     }
   },
+  async isUserInClub(clubId) {
+    try {
+      const response = await apiClient.get(`/clubs/${clubId}/users`);
+      return response.data.isUserInClub;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
