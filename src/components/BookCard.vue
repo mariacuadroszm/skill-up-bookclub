@@ -142,7 +142,11 @@ export default {
           );
           this.isUserInClub = await EventService.isUserInClub(this.bookId);
         } else {
-          await EventService.leaveClub(this.userId, this.book.id);
+          await EventService.leaveClub(
+            this.userId,
+            this.book.id,
+            this.participants
+          );
           this.participants = await EventService.getParticipantsCount(
             this.book.id
           );

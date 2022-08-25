@@ -52,8 +52,10 @@ export default {
       `/users/${userId}/clubs/${clubId}/join?members=${members}`
     );
   },
-  leaveClub(userId, clubId) {
-    return apiClient.patch(`/users/${userId}/clubs/${clubId}/unjoin?`);
+  leaveClub(userId, clubId, members) {
+    return apiClient.patch(
+      `/users/${userId}/clubs/${clubId}/unjoin?members=${members}`
+    );
   },
   signUpUser(userInfo) {
     return apiClient.post("/users/user/signup", userInfo);

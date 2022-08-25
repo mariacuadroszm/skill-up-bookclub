@@ -142,7 +142,11 @@ export default {
             this.participants
           );
         } else {
-          await EventService.leaveClub(this.userId, this.book.id);
+          await EventService.leaveClub(
+            this.userId,
+            this.book.id,
+            this.participants
+          );
         }
         this.$emit("updateParticipants");
       } catch (error) {
