@@ -40,7 +40,7 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
   try {
     const isUserLogged = await EventService.checkUserSesion();
     if (!isUserLogged && to.name !== "log-in" && to.name !== "sign-up") {

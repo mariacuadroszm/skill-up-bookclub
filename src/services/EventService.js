@@ -73,7 +73,8 @@ export default {
   async isUserInClub(clubId) {
     try {
       const response = await apiClient.get(`/clubs/${clubId}/users`);
-      return response.data.isUserInClub;
+      const isInClub = response.data.isUserInClub;
+      return isInClub || "Inactive";
     } catch (error) {
       console.error(error);
     }
