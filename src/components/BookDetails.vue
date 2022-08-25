@@ -1,7 +1,7 @@
 <template>
   <div class="pop-up-container">
     <MainHeader
-      class="main-header"
+      :isInModal="true"
       :homepage="true"
       @closeBookDetails="closePopUp"
     ></MainHeader>
@@ -142,7 +142,8 @@ export default {
 @media (min-width: 768px) {
   .pop-up-container {
     bottom: 0;
-    padding: 0;
+    padding: 50% 0 0;
+    justify-content: flex-start;
     background-color: var(--opacity-background-color);
   }
   .main-header {

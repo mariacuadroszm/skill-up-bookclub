@@ -2,11 +2,11 @@ import axios from "axios";
 
 const apiClient = axios.create({
   baseURL: "https://zemogabookclub-test.click",
-  withCredentials: false,
+  withCredentials: true,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    "Access-Control-Allow-Methods": "GET, POST,PATCH",
+    "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE",
   },
   mode: "no-cors",
 });
@@ -14,7 +14,7 @@ const apiClient = axios.create({
 export default {
   async getBookProfile(id) {
     try {
-      const response = await apiClient.get(`clubs/club?id=${id}`);
+      const response = await apiClient.get(`/clubs/${id}`);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -23,7 +23,7 @@ export default {
 
   async getParticipantsCount(id) {
     try {
-      const response = await apiClient.get(`/clubs/club/users?id=${id}`);
+      const response = await apiClient.get(`/clubs/${id}/users`);
       return response.data.count;
     } catch (error) {
       console.error(error);
@@ -41,21 +41,41 @@ export default {
   },
   async getMembersList(id) {
     try {
-      const response = await apiClient.get(`/clubs/club/users?id=${id}`);
+      const response = await apiClient.get(`/clubs/${id}/users`);
       return response.data.usersInClub;
     } catch (error) {
       console.error(error);
     }
   },
-
-  joinClub(userId, clubId) {
+  joinClub(userId, clubId, members) {
     return apiClient.patch(
-      `/users/user/club/join?id=${userId}&clubId=${clubId}`
+      `/users/${userId}/clubs/${clubId}/join?members=${members}`
     );
   },
   leaveClub(userId, clubId) {
-    return apiClient.patch(
-      `/users/user/club/unjoin?id=${userId}&clubId=${clubId}`
-    );
+    return apiClient.patch(`/users/${userId}/clubs/${clubId}/unjoin?`);
+  },
+  signUpUser(userInfo) {
+    return apiClient.post("/users/user/signup", userInfo);
+  },
+  logInUser(userInfo) {
+    return apiClient.post("/users/user/login", userInfo);
+  },
+
+  async checkUserSesion() {
+    try {
+      const response = await apiClient.get("/users/user/checkSession");
+      return response.data.currentUser;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async isUserInClub(clubId) {
+    try {
+      const response = await apiClient.get(`/clubs/${clubId}/users`);
+      return response.data.usersInClub;
+    } catch (error) {
+      console.error(error);
+    }
   },
 };

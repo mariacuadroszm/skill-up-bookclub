@@ -1,7 +1,10 @@
 <template>
-  <div class="pop-up-container">
-    <div class="pop-up-inner mx-11 py-8 px-5">
-      <slot name="text" class="pop-up-inner__text"></slot>
+  <div class="test">
+    <div class="testy-test mx-11 py-8 px-5">
+      <p class="testy-test__text text-s font-semibold">
+        Logging out. <br />
+        You will be returned to the login screen
+      </p>
       <ButtonBC
         class="close__btn font-semibold"
         variant="secondary"
@@ -26,17 +29,11 @@ import ButtonBC from "./ui-components/ButtonComponent.vue";
 export default {
   name: "LogOutPopUp",
   emits: ["closePopUp"],
-  data() {
-    return {
-      test: false,
-    };
-  },
   components: {
     ButtonBC,
   },
   methods: {
     closePopUp() {
-      console.log("The pop-up should no longer appear");
       this.$emit("closePopUp");
     },
   },
@@ -44,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-.pop-up-container {
+.test {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,7 +53,7 @@ export default {
   z-index: 99;
   background-color: var(--opacity-background-color);
 }
-.pop-up-inner {
+.testy-test {
   background-color: var(--white);
   border-radius: 0.8rem;
   text-align: center;
@@ -71,7 +68,7 @@ export default {
 }
 
 @media (min-width: 768px) {
-  .pop-up-inner {
+  .testy-test {
     width: 34.8rem;
     padding-block: 4.4rem;
   }
