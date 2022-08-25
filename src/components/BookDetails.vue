@@ -142,8 +142,7 @@ export default {
 @media (min-width: 768px) {
   .pop-up-container {
     bottom: 0;
-    padding: 50% 0 0;
-    justify-content: flex-start;
+    padding: 0;
     background-color: var(--opacity-background-color);
   }
   .main-header {
@@ -154,6 +153,10 @@ export default {
     height: 80rem;
     padding: 0;
     overflow-y: scroll;
+  }
+
+  .pop-up-inner::-webkit-scrollbar {
+    border-radius: 0 0.8rem 0.8rem 0;
   }
 
   .close-btn-container {

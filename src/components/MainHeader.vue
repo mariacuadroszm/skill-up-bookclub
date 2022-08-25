@@ -101,6 +101,7 @@ export default {
 
 @media (min-width: 768px) {
   .header-container {
+    width: 100%;
     height: 5.4rem;
     margin-block: 5.2rem;
   }
@@ -117,15 +118,25 @@ export default {
   }
 
   .logOutIcon {
-    padding: 0 2.8rem 0 0;
+    padding: 0;
   }
 
   .main-header {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .main-header-pop-up {
     display: none;
+  }
+}
+
+@media (min-width: 1500px) {
+  .header-container {
+    max-width: 145.5rem;
+    width: 145.5rem;
   }
 }
 </style>
