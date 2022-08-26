@@ -81,4 +81,8 @@ export default {
       console.error(error);
     }
   },
+
+  logOutUser() {
+    return apiClient.delete("/users/user/logout");
+  },
 };

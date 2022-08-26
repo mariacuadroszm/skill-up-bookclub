@@ -15,7 +15,7 @@
       <ButtonBC
         class="pop-up__btn font-semibold"
         variant="primary"
-        @click="closePopUp"
+        @click="logOutUser"
       >
         Log Out
       </ButtonBC>
@@ -25,6 +25,7 @@
 
 <script>
 import ButtonBC from "./ui-components/ButtonComponent.vue";
+import EventService from "../services/EventService";
 
 export default {
   name: "LogOutPopUp",
@@ -35,6 +36,16 @@ export default {
   methods: {
     closePopUp() {
       this.$emit("closePopUp");
+    },
+    async logOutUser() {
+      try {
+        await EventService.logOutUser();
+        this.$router.push({
+          name: "log-in",
+        });
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
