@@ -1,8 +1,8 @@
 <template>
   <div class="pop-up-container">
     <MainHeader
-      class="main-header"
       :homepage="true"
+      :isInModal="true"
       @proposeBookFormTrigger="closePopUp"
     ></MainHeader>
     <div class="pop-up-inner">
@@ -56,10 +56,6 @@ export default {
   width: 100%;
 }
 
-.main-header {
-  width: 100%;
-}
-
 .close__btn {
   display: none;
 }
@@ -71,9 +67,7 @@ export default {
     top: -16.2rem;
     bottom: 0;
   }
-  .main-header {
-    display: none;
-  }
+
   .pop-up-inner {
     padding: 0;
     width: 60rem;

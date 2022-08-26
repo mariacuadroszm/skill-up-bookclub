@@ -1,7 +1,7 @@
 <template>
   <div class="pop-up-container">
     <div class="pop-up-inner mx-11 px-12 py-8">
-      <slot class="pop-up-inner__text"></slot>
+      <slot name="text" class="pop-up-inner__text"></slot>
       <ButtonBC class="pop-up__btn" variant="primary" @click="closePopUp"
         >Got it!</ButtonBC
       >

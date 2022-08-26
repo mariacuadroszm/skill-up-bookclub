@@ -9,6 +9,7 @@
       disabled: isDisabled,
       close: isCloseX,
       login: isLogin,
+      logOutOutline: isLogOutOutline,
     }"
   >
     <slot>Show all</slot>
@@ -31,6 +32,7 @@ export default {
           "disabled",
           "close",
           "login",
+          "logOutOutline",
         ].includes(propValue);
       },
     },
@@ -59,6 +61,9 @@ export default {
     },
     isLogin() {
       return this.variant === "login";
+    },
+    isLogOutOutline() {
+      return this.variant === "logOutOutline";
     },
   },
 };
@@ -94,6 +99,7 @@ export default {
   box-shadow: none;
   padding: 0;
   margin: 0;
+  margin-bottom: 0.7rem;
   justify-self: left;
 }
 
@@ -105,6 +111,14 @@ export default {
 
 .login {
   background: var(--accent-color);
+}
+
+.logOutOutline {
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 0.3rem;
+  justify-self: right;
 }
 
 @media (min-width: 768px) {
