@@ -16,9 +16,13 @@
           :book="book"
           :isReader="isReader"
           :participants="participants"
+          :isUserInClub="isUserInClub"
           @updateParticipants="updateParticipants"
         ></CompleteBookInfo>
-        <ActiveClubMembers v-if="isReader" :id="id"></ActiveClubMembers>
+        <ActiveClubMembers
+          v-if="isReader"
+          :members="members"
+        ></ActiveClubMembers>
       </div>
     </article>
   </div>
@@ -43,6 +47,8 @@ export default {
   data() {
     return {
       participants: 0,
+      members: [],
+      isUserInClub: "",
     };
   },
   props: {
@@ -82,6 +88,8 @@ export default {
     async updateParticipants() {
       try {
         this.participants = await EventService.getParticipantsCount(this.id);
+        this.members = await EventService.getMembersList(this.id);
+        this.isUserInClub = await EventService.isUserInClub(this.id);
       } catch (error) {
         console.error(error);
       }
@@ -93,6 +101,8 @@ export default {
   async created() {
     try {
       this.participants = await EventService.getParticipantsCount(this.id);
+      this.members = await EventService.getMembersList(this.id);
+      this.isUserInClub = await EventService.isUserInClub(this.id);
     } catch (error) {
       console.error(error);
     }

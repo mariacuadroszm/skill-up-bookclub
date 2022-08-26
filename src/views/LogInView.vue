@@ -37,6 +37,11 @@
             class="label__input"
             v-model="password"
           />
+          <div v-if="incorrectCredentials" class="form-error">
+            <ul>
+              <li class="text-s">{{ incorrectCredentials }}</li>
+            </ul>
+          </div>
         </template>
       </FormLabel>
 
@@ -47,8 +52,8 @@
         <p class="text-s font-medium">Don't have an account?</p>
         <router-link
           class="final-info__router text-s font-medium"
-          :to="{ name: 'sign-in' }"
-          >Sign in here</router-link
+          :to="{ name: 'sign-up' }"
+          >Sign up here</router-link
         >
       </div>
     </form>
@@ -58,6 +63,7 @@
 <script>
 import FormLabel from "../components/FormLabel.vue";
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
+import EventService from "../services/EventService.js";
 
 export default {
   name: "LogInView",
@@ -70,23 +76,41 @@ export default {
       email: "",
       password: "",
       notZemogaEmail: "",
+      incorrectCredentials: "",
     };
   },
   methods: {
-    submitLogIn() {
-      if (
-        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemoga.com\s*$/.test(this.email) ||
-        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemogainc.com\s*$/.test(this.email)
-      ) {
-        this.notZemogaEmail = "";
-      } else {
-        this.notZemogaEmail = "Sorry, Zemoga e-mail only!";
-      }
+    async submitLogIn() {
+      try {
+        if (
+          /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemoga.com\s*$/.test(
+            this.email
+          ) ||
+          /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemogainc.com\s*$/.test(
+            this.email
+          )
+        ) {
+          this.notZemogaEmail = "";
+        } else {
+          this.notZemogaEmail = "Sorry, Zemoga e-mail only!";
+        }
 
-      if (!this.notZemogaEmail) {
-        this.$router.push({
-          name: "home",
-        });
+        if (!this.notZemogaEmail) {
+          const userInfo = {
+            email: this.email,
+            password: this.password,
+          };
+          await EventService.logInUser(userInfo);
+          this.$router.push({
+            name: "home",
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          this.incorrectCredentials = " Your email or password is incorrect";
+        } else {
+          console.error(error);
+        }
       }
     },
   },

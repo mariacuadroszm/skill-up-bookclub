@@ -52,8 +52,10 @@ export default {
       `/users/${userId}/clubs/${clubId}/join?members=${members}`
     );
   },
-  leaveClub(userId, clubId) {
-    return apiClient.patch(`/users/${userId}/clubs/${clubId}/unjoin?`);
+  leaveClub(userId, clubId, members) {
+    return apiClient.patch(
+      `/users/${userId}/clubs/${clubId}/unjoin?members=${members}`
+    );
   },
   signUpUser(userInfo) {
     return apiClient.post("/users/user/signup", userInfo);
@@ -73,7 +75,8 @@ export default {
   async isUserInClub(clubId) {
     try {
       const response = await apiClient.get(`/clubs/${clubId}/users`);
-      return response.data.usersInClub;
+      const isInClub = response.data.isUserInClub;
+      return isInClub || "Inactive";
     } catch (error) {
       console.error(error);
     }

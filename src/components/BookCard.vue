@@ -39,11 +39,11 @@
           class="font-medium vote-btn"
           variant="secondary"
           @click.stop="addVote"
-          :class="{ 'user-vote': userVoted }"
+          :class="{ 'user-vote': isUserInClub === 'Active' }"
           data-testid="textBtn"
         >
           {{ textBtn }}
-          <span v-if="!userVoted"
+          <span v-if="isUserInClub != 'Active'"
             ><v-icon name="hi-solid-plus" scale="0.8" class="icon"
           /></span>
           <span v-else
@@ -79,12 +79,14 @@ export default {
   emits: ["blockBg", "unblockBg"],
   data() {
     return {
-      userVoted: false,
       title: this.book.book.title,
       author: this.book.book.author,
       participants: this.book.userCount,
+      bookId: this.book.id,
       displayBookDetails: false,
       bookInfo: {},
+      userId: "",
+      isUserInClub: this.book.book.isUserInClub,
     };
   },
   props: {
@@ -99,11 +101,11 @@ export default {
   },
   computed: {
     textBtn() {
-      if (this.isReader && !this.userVoted) {
+      if (this.isReader && this.isUserInClub != "Active") {
         return "Join";
-      } else if (!this.isReader && !this.userVoted) {
+      } else if (!this.isReader && this.isUserInClub != "Active") {
         return "Vote";
-      } else if (this.isReader && this.userVoted) {
+      } else if (this.isReader && this.isUserInClub === "Active") {
         return "Joined";
       } else {
         return "Voted";
@@ -129,14 +131,26 @@ export default {
   methods: {
     async addVote() {
       try {
-        if (!this.userVoted) {
-          await EventService.joinClub("Mar123", this.book.id);
-          this.participants = this.participants + 1;
-          this.userVoted = true;
+        if (this.isUserInClub != "Active") {
+          await EventService.joinClub(
+            this.userId,
+            this.book.id,
+            this.participants
+          );
+          this.participants = await EventService.getParticipantsCount(
+            this.book.id
+          );
+          this.isUserInClub = await EventService.isUserInClub(this.bookId);
         } else {
-          await EventService.leaveClub("Mar123", this.book.id);
-          this.participants = this.participants - 1;
-          this.userVoted = false;
+          await EventService.leaveClub(
+            this.userId,
+            this.book.id,
+            this.participants
+          );
+          this.participants = await EventService.getParticipantsCount(
+            this.book.id
+          );
+          this.isUserInClub = await EventService.isUserInClub(this.bookId);
         }
       } catch (error) {
         console.error(error);
@@ -146,14 +160,24 @@ export default {
       this.displayBookDetails = true;
       this.$emit("blockBg");
     },
-    hideBookDetails() {
-      this.displayBookDetails = false;
-      this.$emit("unblockBg");
+    async hideBookDetails() {
+      try {
+        this.displayBookDetails = false;
+        this.participants = await EventService.getParticipantsCount(
+          this.book.id
+        );
+        this.isUserInClub = await EventService.isUserInClub(this.bookId);
+        this.$emit("unblockBg");
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   async created() {
     try {
       this.bookInfo = await EventService.getBookProfile(this.book.id);
+      const userSesion = await EventService.checkUserSesion();
+      this.userId = userSesion.id;
     } catch (error) {
       console.error(error);
     }

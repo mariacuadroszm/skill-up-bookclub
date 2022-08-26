@@ -51,6 +51,11 @@
               <li class="text-s">{{ notZemogaEmail }}</li>
             </ul>
           </div>
+          <div v-if="emailInUse" class="email-in-use form-error">
+            <ul>
+              <li class="text-s">{{ emailInUse }}</li>
+            </ul>
+          </div>
         </template>
       </FormLabel>
 
@@ -62,7 +67,7 @@
             id="password"
             placeholder="Type your password"
             required
-            class="label__input"
+            class="label__input label__input--password"
             v-model="password"
           />
           <div v-if="!validPassword" class="not-valid-password">
@@ -87,7 +92,7 @@
             id="confirmPassword"
             placeholder="Type again your password"
             required
-            class="label__input"
+            class="label__input label__input--password"
             v-model="confirmPassword"
           />
           <div
@@ -103,7 +108,7 @@
 
       <div class="final-info-container">
         <ButtonBC class="final-info__button" type="submit" variant="login">
-          Sign in
+          Sign up
         </ButtonBC>
         <p class="text-s font-medium">Already have an account?</p>
         <router-link
@@ -119,9 +124,10 @@
 <script>
 import FormLabel from "../components/FormLabel.vue";
 import ButtonBC from "../components/ui-components/ButtonComponent.vue";
+import EventService from "../services/EventService.js";
 
 export default {
-  name: "SignInView",
+  name: "SignUpView",
   components: {
     FormLabel,
     ButtonBC,
@@ -136,42 +142,68 @@ export default {
       notZemogaEmail: "",
       passwordsDontMatch: "",
       validPassword: true,
+      emailInUse: "",
     };
   },
 
   methods: {
-    submitSignIn() {
-      if (
-        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemoga.com\s*$/.test(this.email) ||
-        /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemogainc.com\s*$/.test(this.email)
-      ) {
-        this.notZemogaEmail = "";
-      } else {
-        this.notZemogaEmail = "Sorry, Zemoga e-mail only!";
-      }
+    async submitSignIn() {
+      try {
+        if (
+          /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemoga.com\s*$/.test(
+            this.email
+          ) ||
+          /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@zemogainc.com\s*$/.test(
+            this.email
+          )
+        ) {
+          this.notZemogaEmail = "";
+        } else {
+          this.notZemogaEmail = "Sorry, Zemoga e-mail only!";
+        }
 
-      if (this.password === this.confirmPassword) {
-        this.passwordsDontMatch = "";
-      } else {
-        this.passwordsDontMatch = "Your passwords don't match";
-      }
+        if (this.password === this.confirmPassword) {
+          this.passwordsDontMatch = "";
+        } else {
+          this.passwordsDontMatch = "Your passwords don't match";
+        }
 
-      if (
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/.test(this.password)
-      ) {
-        this.validPassword = true;
-      } else {
-        this.validPassword = false;
-      }
+        if (
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/.test(this.password)
+        ) {
+          this.validPassword = true;
+        } else {
+          this.validPassword = false;
+        }
 
-      if (
-        !this.passwordsDontMatch &&
-        !this.notZemogaEmail &&
-        this.validPassword
-      ) {
-        this.$router.push({
-          name: "home",
-        });
+        if (
+          !this.passwordsDontMatch &&
+          !this.notZemogaEmail &&
+          this.validPassword
+        ) {
+          const userInfo = {
+            firstName: this.name,
+            surname: this.lastName,
+            email: this.email,
+            password: this.password,
+            rePassword: this.confirmPassword,
+          };
+          const userCredentials = {
+            email: this.email,
+            password: this.password,
+          };
+          await EventService.signUpUser(userInfo);
+          await EventService.logInUser(userCredentials);
+          this.$router.push({
+            name: "home",
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          this.emailInUse = "Email already in use";
+        } else {
+          console.error(error);
+        }
       }
     },
   },

@@ -108,6 +108,7 @@ export default {
       author: "",
       link: "",
       synopsis: "",
+      userId: "",
     };
   },
 
@@ -123,6 +124,14 @@ export default {
     },
   },
 
+  async created() {
+    try {
+      const userSesion = await EventService.checkUserSesion();
+      this.userId = userSesion.id;
+    } catch (error) {
+      console.error(error);
+    }
+  },
   methods: {
     async submitForm() {
       try {
@@ -133,7 +142,7 @@ export default {
             synopsis: this.synopsis,
             storeUrl: this.link,
           },
-          userId: "abc",
+          userId: this.userId,
         };
         await EventService.proposeBook(bookData);
         this.$emit("proposeBookFormTrigger");

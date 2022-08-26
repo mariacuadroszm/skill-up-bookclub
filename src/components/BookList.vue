@@ -3,7 +3,7 @@
   <p class="info text-m font-normal"><slot name="description"></slot></p>
   <div class="carousel my-5" :class="[ifNoAvailableBooks ? 'no-books' : '']">
     <BookCard
-      v-for="book in topBooks"
+      v-for="book in books"
       :key="book.id"
       :book="book"
       :isReader="reader"
@@ -82,14 +82,6 @@ export default {
     },
   },
   computed: {
-    topBooks() {
-      const booksCopy = [...this.books];
-      const sortedBooks = booksCopy.sort((a, b) => {
-        return b.participants - a.participants;
-      });
-
-      return sortedBooks.slice(0, 5);
-    },
     ifNoAvailableBooks() {
       return !this.books || !this.books.length;
     },

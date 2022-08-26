@@ -48,11 +48,11 @@
     class="vote-btn font-medium"
     variant="secondary"
     @click="addVote"
-    :class="{ 'user-vote': userVoted }"
+    :class="{ 'user-vote': isUserInClub === 'Active' }"
     data-testid="textBtn"
   >
     {{ textBtn }}
-    <span v-if="!userVoted"
+    <span v-if="isUserInClub != 'Active'"
       ><v-icon name="hi-solid-plus" scale="0.8" class="icon"
     /></span>
     <span v-else
@@ -76,8 +76,8 @@ export default {
   emits: ["updateParticipants"],
   data() {
     return {
-      userVoted: false,
       bookUrl: this.book.storeUrl,
+      userId: "",
     };
   },
   props: {
@@ -93,40 +93,60 @@ export default {
       type: Number,
       required: true,
     },
+    isUserInClub: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
     textBtn() {
-      if (this.isReader && !this.userVoted) {
+      if (this.isReader && this.isUserInClub != "Active") {
         return "Join";
-      } else if (!this.isReader && !this.userVoted) {
+      } else if (!this.isReader && this.isUserInClub != "Active") {
         return "Vote";
-      } else if (this.isReader && this.userVoted) {
+      } else if (this.isReader && this.isUserInClub === "Active") {
         return "Joined";
       } else {
         return "Voted";
       }
     },
     voteMessage() {
-      if (this.isReader && !this.userVoted) {
+      if (this.isReader && this.isUserInClub != "Active") {
         return `Tap "join" to be part of this awesome club. Remember it already started!`;
-      } else if (this.isReader && this.userVoted) {
+      } else if (this.isReader && this.isUserInClub === "Active") {
         return `Now you're part of this club!`;
-      } else if (!this.isReader && !this.userVoted) {
+      } else if (!this.isReader && this.isUserInClub != "Active") {
         return `Tap the "vote" button to be part of our club once it has five or more interested readers.`;
       } else {
         return `Now you're part of this club! Once it starts you'll find this book profile on "active clubs"`;
       }
     },
   },
+
+  async created() {
+    try {
+      const userSesion = await EventService.checkUserSesion();
+      this.userId = userSesion.id;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   methods: {
     async addVote() {
       try {
-        if (!this.userVoted) {
-          await EventService.joinClub("Mar123", this.book.id);
-          this.userVoted = true;
-        } else if (this.userVoted) {
-          await EventService.leaveClub("Mar123", this.book.id);
-          this.userVoted = false;
+        if (this.isUserInClub != "Active") {
+          await EventService.joinClub(
+            this.userId,
+            this.book.id,
+            this.participants
+          );
+        } else {
+          await EventService.leaveClub(
+            this.userId,
+            this.book.id,
+            this.participants
+          );
         }
         this.$emit("updateParticipants");
       } catch (error) {
