@@ -1,9 +1,9 @@
 <template>
   <div class="pop-up-container">
     <MainHeader
-      class="main-header"
+      :isInModal="true"
       :homepage="true"
-      @click="closePopUp"
+      @closeBookDetails="closePopUp"
     ></MainHeader>
     <article class="pop-up-inner">
       <div class="close-btn-container">
@@ -163,6 +163,10 @@ export default {
     height: 80rem;
     padding: 0;
     overflow-y: scroll;
+  }
+
+  .pop-up-inner::-webkit-scrollbar {
+    border-radius: 0 0.8rem 0.8rem 0;
   }
 
   .close-btn-container {
